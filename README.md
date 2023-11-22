@@ -1,4 +1,4 @@
-# flutter_application_1
+# Attendances
 
 A new Flutter project.
 
