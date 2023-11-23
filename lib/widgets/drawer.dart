@@ -103,7 +103,7 @@ class CustomDrawer extends StatelessWidget {
                     backgroundColor: const Color.fromARGB(255, 66, 66, 66),
                     maxRadius: 15,
                     child: Text(
-                      currentSubject.title[0],
+                      currentSubject.title[0].toUpperCase(),
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 13,

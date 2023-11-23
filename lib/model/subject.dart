@@ -8,7 +8,7 @@ class Subject {
 
 List createdSubjects = [
   Subject("KSPM XI", "John Doe", 100),
-  Subject("Himatika", "John Doe", 100),
+  Subject("himatika", "John Doe", 100),
   Subject("Robotika", "John Doe", 100),
   Subject("KSPM XI", "John Doe", 100),
   Subject("Himatika", "John Doe", 100),
