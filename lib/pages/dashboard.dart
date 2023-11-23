@@ -15,14 +15,18 @@ class Dashboard extends StatelessWidget {
         itemBuilder: (context, index) {
           Subject currentSubject = createdSubjects[index];
 
-          return SubjectCard(currentSubject.title, currentSubject.createdBy, currentSubject.totalMembers);
+          return SubjectCard(currentSubject.title, currentSubject.createdBy,
+              currentSubject.totalMembers);
         },
       ),
       floatingActionButton: FloatingActionButton(
         tooltip: 'Increment',
         onPressed: () {},
         backgroundColor: const Color.fromARGB(255, 44, 62, 80),
-        child: const Icon(Icons.camera_alt),
+        child: const Icon(
+          Icons.camera_alt,
+          color: Colors.white,
+        ),
       ),
     );
   }

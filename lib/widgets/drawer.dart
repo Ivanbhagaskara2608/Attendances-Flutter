@@ -79,7 +79,7 @@ class CustomDrawer extends StatelessWidget {
             ),
           ),
           Container(
-              margin: EdgeInsets.only(left: 24, top: 10, bottom: 10),
+              margin: EdgeInsets.only(left: 24, bottom: 10),
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
@@ -127,7 +127,7 @@ class CustomDrawer extends StatelessWidget {
             ),
           ),
           Container(
-            margin: EdgeInsets.only(left: 24, top: 10, bottom: 10),
+            margin: EdgeInsets.only(left: 24, bottom: 10),
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
@@ -186,12 +186,15 @@ class CustomDrawer extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10.0))),
               child: Text(
                 "Join Subject",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 12,
+                    color: Colors.white),
               ),
             ),
           ),
           Container(
-            margin: EdgeInsets.symmetric(horizontal: 8.0, vertical: 0),
+            margin: EdgeInsets.symmetric(horizontal: 8.0, vertical: 5),
             child: ElevatedButton(
               onPressed: () {},
               style: ElevatedButton.styleFrom(
@@ -201,7 +204,10 @@ class CustomDrawer extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10.0))),
               child: Text(
                 "Create New Subject",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 12,
+                    color: Colors.white),
               ),
             ),
           ),
