@@ -37,7 +37,10 @@ class Login extends StatelessWidget {
               Expanded(
                   child: ElevatedButton(
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => Dashboard()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Dashboard()));
                       },
                       style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
@@ -62,7 +65,7 @@ class Login extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10)),
                       backgroundColor: const Color.fromARGB(255, 199, 0, 57)),
                   child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 14, horizontal: 35),
+                    padding: EdgeInsets.symmetric(vertical: 14),
                     child: Text("Back",
                         style: TextStyle(fontSize: 20, color: Colors.white)),
                   ))
