@@ -21,7 +21,10 @@ class Login extends StatelessWidget {
             ),
           ),
           SizedBox(height: 25),
-          CustomTextFIeld("Login"),
+          Padding(
+            padding: const EdgeInsets.only(top: 25),
+            child: CustomTextFIeld("Login"),
+          ),
           CustomPasswordTextFIeld("Password"),
           Spacer(),
           Container(

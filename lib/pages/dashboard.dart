@@ -11,12 +11,12 @@ class Dashboard extends StatelessWidget {
       appBar: CustomAppBar(),
       drawer: CustomDrawer(),
       body: ListView.builder(
-        itemCount: createdSubjects.length,
+        itemCount: subjects.length,
         itemBuilder: (context, index) {
-          Subject currentSubject = createdSubjects[index];
+          Subject currentSubject = subjects[index];
 
           return SubjectCard(currentSubject.title, currentSubject.createdBy,
-              currentSubject.totalMembers);
+              currentSubject.totalMembers, currentSubject.type);
         },
       ),
       floatingActionButton: FloatingActionButton(

@@ -2,24 +2,16 @@ class Subject {
   final String title;
   final String createdBy;
   final int totalMembers;
+  final String type;
 
-  Subject(this.title, this.createdBy, this.totalMembers);
+  Subject(this.title, this.createdBy, this.totalMembers, this.type);
 }
 
-List createdSubjects = [
-  Subject("KSPM XI", "John Doe", 100),
-  Subject("himatika", "John Doe", 100),
-  Subject("Robotika", "John Doe", 100),
-  Subject("KSPM XI", "John Doe", 100),
-  Subject("Himatika", "John Doe", 100),
-  Subject("Robotika", "John Doe", 100),
-];
-
-List joinedSubjects = [
-  Subject("KSPM XX", "John Doe", 100),
-  Subject("Himakom", "John Doe", 100),
-  Subject("Informatika", "John Doe", 100),
-  Subject("KSPM XX", "John Doe", 100),
-  Subject("Himakom", "John Doe", 100),
-  Subject("Informatika", "John Doe", 100),
+List subjects = [
+  Subject("KSPM XI", "John Doe", 100, "created"),
+  Subject("Himatika", "John Doe", 100, "created"),
+  Subject("Robotika", "John Doe", 100, "created"),
+  Subject("Akrap", "John Doe", 100, "joined"),
+  Subject("Himasi", "John Doe", 100, "joined"),
+  Subject("Akuntansi", "John Doe", 100, "joined"),
 ];

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/model/subject.dart';
+import 'package:flutter_application_1/pages/dashboard.dart';
+import 'package:flutter_application_1/pages/history_page.dart';
 
 class CustomDrawer extends StatelessWidget {
   @override
@@ -38,7 +40,10 @@ class CustomDrawer extends StatelessWidget {
             color: Colors.black,
           ),
           ListTile(
-              onTap: () {},
+              onTap: () {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => Dashboard()));
+              },
               visualDensity: VisualDensity(horizontal: 0, vertical: -4),
               leading: Icon(
                 Icons.home,
@@ -46,7 +51,10 @@ class CustomDrawer extends StatelessWidget {
               ),
               title: Text("Home", style: TextStyle(fontSize: 20))),
           ListTile(
-              onTap: () {},
+              onTap: () {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => HistoryPage()));
+              },
               visualDensity: VisualDensity(horizontal: 0, vertical: -4),
               leading: Icon(
                 Icons.history,
@@ -90,20 +98,23 @@ class CustomDrawer extends StatelessWidget {
           Expanded(
             child: ListView.builder(
               padding: EdgeInsets.zero,
-              itemCount: createdSubjects.length,
+              itemCount:
+                  subjects.where((subject) => subject.type == "created").length,
               itemBuilder: (context, index) {
-                Subject currentSubject = createdSubjects[index];
+                Subject currentCreatedSubjects = subjects
+                    .where((subject) => subject.type == "created")
+                    .toList()[index];
 
                 return ListTile(
                   onTap: () {
-                    print("Subject: ${currentSubject.title}");
+                    print("Subject: ${currentCreatedSubjects.title}");
                   },
                   visualDensity: VisualDensity(horizontal: 0, vertical: -4),
                   leading: CircleAvatar(
                     backgroundColor: const Color.fromARGB(255, 66, 66, 66),
                     maxRadius: 15,
                     child: Text(
-                      currentSubject.title[0].toUpperCase(),
+                      currentCreatedSubjects.title[0].toUpperCase(),
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 13,
@@ -112,7 +123,7 @@ class CustomDrawer extends StatelessWidget {
                     ),
                   ),
                   title: Text(
-                    currentSubject.title,
+                    currentCreatedSubjects.title,
                     style: TextStyle(fontSize: 20),
                   ),
                 );
@@ -139,9 +150,12 @@ class CustomDrawer extends StatelessWidget {
           Expanded(
             child: ListView.builder(
               padding: EdgeInsets.zero,
-              itemCount: joinedSubjects.length,
+              itemCount:
+                  subjects.where((subject) => subject.type == "joined").length,
               itemBuilder: (context, index) {
-                Subject currentJoinedSubjects = joinedSubjects[index];
+                Subject currentJoinedSubjects = subjects
+                    .where((subject) => subject.type == "joined")
+                    .toList()[index];
 
                 return ListTile(
                   onTap: () {

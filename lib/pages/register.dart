@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/pages/dashboard.dart';
+import 'package:flutter_application_1/widgets/calendar_textfield.dart';
 import 'package:flutter_application_1/widgets/password_textfield.dart';
 import 'package:flutter_application_1/widgets/textfield_custom.dart';
 
@@ -22,10 +23,22 @@ class Register extends StatelessWidget {
               ),
             ),
             SizedBox(height: 25),
-            CustomTextFIeld("Email"),
-            CustomTextFIeld("Fullname"),
-            CustomTextFIeld("Gender"),
-            CustomTextFIeld("Birthdate"),
+            Padding(
+              padding: const EdgeInsets.only(top: 25),
+              child: CustomTextFIeld("Email"),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 25),
+              child: CustomTextFIeld("Fullname"),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 25),
+              child: CustomTextFIeld("Gender"),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 25),
+              child: CalendarTextField("Birthdate"),
+            ),
             CustomPasswordTextFIeld("Password"),
             CustomPasswordTextFIeld("Password Confirmation"),
             Container(
