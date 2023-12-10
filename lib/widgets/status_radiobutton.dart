@@ -1,43 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/model/status_radio.dart';
 
-class StatusIndicator extends StatefulWidget {
-  final String status;
+class StatusIndicator extends StatelessWidget {
+  final StatusRadio _item;
 
-  StatusIndicator(this.status);
-
-  @override
-  // ignore: library_private_types_in_public_api
-  _StatusIndicatorState createState() => _StatusIndicatorState();
-}
-
-class _StatusIndicatorState extends State<StatusIndicator> {
-  String selectedStatus = "";
+  StatusIndicator(this._item);
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          selectedStatus = widget.status;
-        });
-      },
-      child: Padding(
-        padding: const EdgeInsets.only(right: 10),
+    return Padding(
+      padding: const EdgeInsets.only(right: 10),
+      child: CircleAvatar(
+        maxRadius: 20,
+        backgroundColor: _item.isSelected
+            ? Color.fromARGB(255, 66, 66, 66)
+            : Colors.transparent,
         child: CircleAvatar(
-          maxRadius: 20,
-          backgroundColor: (selectedStatus == widget.status)
-              ? Color.fromARGB(255, 44, 62, 80)
-              : Colors.transparent,
-          child: CircleAvatar(
-            backgroundColor: _getStatusColor(),
-            maxRadius: 18,
-            child: Text(
-              widget.status,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-                color: _getStatusTextColor(),
-              ),
+          backgroundColor: _getStatusColor(),
+          maxRadius: 18,
+          child: Text(
+            _item.buttonText,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+              color: _getStatusTextColor(),
             ),
           ),
         ),
@@ -46,7 +32,7 @@ class _StatusIndicatorState extends State<StatusIndicator> {
   }
 
   Color _getStatusColor() {
-    switch (widget.status) {
+    switch (_item.buttonText) {
       case "P":
         return Color.fromARGB(255, 158, 255, 150);
       case "L":
@@ -61,7 +47,7 @@ class _StatusIndicatorState extends State<StatusIndicator> {
   }
 
   Color _getStatusTextColor() {
-    switch (widget.status) {
+    switch (_item.buttonText) {
       case "P":
         return Color.fromARGB(255, 15, 175, 1);
       case "L":

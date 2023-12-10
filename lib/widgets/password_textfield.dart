@@ -13,7 +13,7 @@ class CustomPasswordTextFIeld extends StatefulWidget {
 class _CustomPasswordTextFIeldState extends State<CustomPasswordTextFIeld> {
   final inputController = TextEditingController();
   String password = "";
-  bool isPasswordVisible = false;
+  bool isPasswordVisible = true;
 
   @override
   void initState() {

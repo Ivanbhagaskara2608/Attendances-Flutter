@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/pages/dashboard.dart';
 import 'package:flutter_application_1/widgets/calendar_textfield.dart';
+import 'package:flutter_application_1/widgets/dropdown_custom.dart';
 import 'package:flutter_application_1/widgets/password_textfield.dart';
 import 'package:flutter_application_1/widgets/textfield_custom.dart';
 
+// ignore: must_be_immutable
 class Register extends StatelessWidget {
+  final List<String> genderItems = [
+    'Male',
+    'Female',
+  ];
+  String? selectedValue;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,9 +39,11 @@ class Register extends StatelessWidget {
               child: CustomTextFIeld("Fullname"),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 25),
-              child: CustomTextFIeld("Gender"),
-            ),
+                padding: const EdgeInsets.only(top: 25),
+                child: CustomDropdownFormField(
+                items: genderItems,
+                selectedValue: selectedValue,
+              ),),
             Padding(
               padding: const EdgeInsets.only(top: 25),
               child: CalendarTextField("Birthdate"),
