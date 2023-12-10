@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/model/subject.dart';
 import 'package:flutter_application_1/pages/dashboard.dart';
 import 'package:flutter_application_1/pages/history_page.dart';
+import 'package:flutter_application_1/pages/settings_page.dart';
 
 class CustomDrawer extends StatelessWidget {
   @override
@@ -72,7 +73,10 @@ class CustomDrawer extends StatelessWidget {
               title: Text("Buy Premium",
                   style: TextStyle(fontSize: 20, color: Colors.green))),
           ListTile(
-              onTap: () {},
+              onTap: () {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => SettingsPage()));
+              },
               visualDensity: VisualDensity(horizontal: 0, vertical: -4),
               leading: Icon(
                 Icons.settings,
