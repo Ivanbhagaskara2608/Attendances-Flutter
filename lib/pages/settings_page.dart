@@ -296,7 +296,7 @@ class SettingsPage extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0))),
               child: Text(
-                "Reset All Filter",
+                "Logout",
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 15,
