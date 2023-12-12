@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/model/status_radio.dart';
+import 'package:flutter_application_1/model/zoom_camera.dart';
 
 class CameraZoomIndicator extends StatelessWidget {
-  final StatusRadio _item;
+  final ZoomCamera _item;
 
   CameraZoomIndicator(this._item);
 

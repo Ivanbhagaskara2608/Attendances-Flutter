@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/model/status_radio.dart';
+import 'package:flutter_application_1/model/zoom_camera.dart';
 import 'package:flutter_application_1/pages/dashboard.dart';
 import 'package:flutter_application_1/widgets/camera_zoom.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
@@ -15,14 +16,15 @@ class _AttendanceScannerState extends State<AttendanceScanner> {
   bool isScanCompleted = false;
   bool isFlashOn = false;
   MobileScannerController scannerController = MobileScannerController();
-  List<StatusRadio> radioItems = [];
+  List<ZoomCamera> radioItems = [];
+  String type = "1X";
 
   @override
   void initState() {
     super.initState();
-    radioItems.add(StatusRadio(true, "1X"));
-    radioItems.add(StatusRadio(false, "2X"));
-    radioItems.add(StatusRadio(false, "5X"));
+    radioItems.add(ZoomCamera(true, "1X", 0));
+    radioItems.add(ZoomCamera(false, "2X", 0.5));
+    radioItems.add(ZoomCamera(false, "5X", 1.0));
   }
 
   @override
@@ -141,7 +143,9 @@ class _AttendanceScannerState extends State<AttendanceScanner> {
                                         element.isSelected = false;
                                       }
                                       radioItems[index].isSelected = true;
+                                      
                                     });
+                                    scannerController.setZoomScale(radioItems[index].zoom);
                                   },
                                   child: CameraZoomIndicator(radioItems[index]),
                                 );
