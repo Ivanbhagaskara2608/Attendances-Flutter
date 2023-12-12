@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/model/subject.dart';
+import 'package:flutter_application_1/pages/buy_subscription_page.dart';
 import 'package:flutter_application_1/pages/dashboard.dart';
 import 'package:flutter_application_1/pages/history_page.dart';
 import 'package:flutter_application_1/pages/settings_page.dart';
@@ -63,7 +64,10 @@ class CustomDrawer extends StatelessWidget {
               ),
               title: Text("History", style: TextStyle(fontSize: 20))),
           ListTile(
-              onTap: () {},
+              onTap: () {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => BuySubscriptionPage()));
+              },
               visualDensity: VisualDensity(horizontal: 0, vertical: -4),
               leading: Icon(
                 Icons.lock,

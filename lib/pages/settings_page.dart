@@ -75,7 +75,7 @@ class SettingsPage extends StatelessWidget {
           ListTile(
             onTap: () {},
             title: Padding(
-              padding: EdgeInsets.symmetric(vertical: 5, horizontal: 24),
+              padding: EdgeInsets.symmetric(horizontal: 24),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -107,7 +107,7 @@ class SettingsPage extends StatelessWidget {
           ListTile(
             onTap: () {},
             title: Padding(
-              padding: EdgeInsets.symmetric(vertical: 5, horizontal: 24),
+              padding: EdgeInsets.symmetric(horizontal: 24),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -139,7 +139,7 @@ class SettingsPage extends StatelessWidget {
           ListTile(
             onTap: () {},
             title: Padding(
-              padding: EdgeInsets.symmetric(vertical: 5, horizontal: 24),
+              padding: EdgeInsets.symmetric(horizontal: 24),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -192,7 +192,7 @@ class SettingsPage extends StatelessWidget {
           ListTile(
             onTap: () {},
             title: Padding(
-              padding: EdgeInsets.symmetric(vertical: 5, horizontal: 24),
+              padding: EdgeInsets.symmetric(horizontal: 24),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -224,7 +224,7 @@ class SettingsPage extends StatelessWidget {
           ListTile(
             onTap: () {},
             title: Padding(
-              padding: EdgeInsets.symmetric(vertical: 5, horizontal: 24),
+              padding: EdgeInsets.symmetric(horizontal: 24),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -256,7 +256,7 @@ class SettingsPage extends StatelessWidget {
           ListTile(
             onTap: () {},
             title: Padding(
-              padding: EdgeInsets.symmetric(vertical: 5, horizontal: 24),
+              padding: EdgeInsets.symmetric(horizontal: 24),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

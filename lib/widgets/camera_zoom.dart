@@ -11,7 +11,7 @@ class CameraZoomIndicator extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(right: 15),
       child: CircleAvatar(
-        maxRadius: _item.isSelected ? 20 : 5,
+        maxRadius: _item.isSelected ? 20 : 7,
         backgroundColor:
             _item.isSelected ? Colors.black.withOpacity(0.5) : Colors.white,
         child: _item.isSelected

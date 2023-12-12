@@ -89,47 +89,47 @@ class _AttendanceScannerState extends State<AttendanceScanner> {
                     padding: const EdgeInsets.symmetric(vertical: 20),
                     child: Stack(
                       children: [
-                        // Widget pertama (MobileScanner)
-                        Positioned.fill(
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(15),
-                            child: MobileScanner(
-                              controller: scannerController,
-                              onDetect: (barcode) {
-                                if (!isScanCompleted) {
-                                  String code = barcode.barcodes.toString();
-
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return AlertDialog(
-                                        title: Text('Barcode Detected'),
-                                        content: Text('Code: $code'),
-                                        actions: <Widget>[
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.of(context)
-                                                  .pop(); // Close the dialog
-                                            },
-                                            child: Text('Close'),
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  );
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(15),
+                          child: MobileScanner(
+                            controller: scannerController,
+                            onDetect: (capture) {
+                              if (!isScanCompleted) {
+                                final List<Barcode> barcodes = capture.barcodes;
+                                String? code = "";
+                                for (final barcode in barcodes) {
+                                  code = barcode.rawValue;
                                 }
-                              },
-                            ),
+                                isScanCompleted = true;
+
+                                showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      title: Text('Barcode Detected'),
+                                      content: Text('Code: $code'),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          onPressed: () {
+                                            isScanCompleted = false;
+                                            Navigator.of(context)
+                                                .pop(); // Close the dialog
+                                          },
+                                          child: Text('Close'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              }
+                            },
                           ),
                         ),
-
-                        // Widget kedua (ListView.builder)
-                        Positioned(
-                          bottom: 10, // Atur ke bawah
-                          left: 140, // Atur ke kiri
-                          right: 0, // Atur ke kanan
+                        Align(
+                          alignment: Alignment.bottomCenter,
                           child: SizedBox(
-                            height: 40, // Sesuaikan tinggi sesuai kebutuhan
+                            height: 60,
+                            width: 110,
                             child: ListView.builder(
                               scrollDirection: Axis.horizontal,
                               itemCount: radioItems.length,
@@ -189,7 +189,7 @@ class _AttendanceScannerState extends State<AttendanceScanner> {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10.0))),
                           child: Text(
-                            "Logout",
+                            "Input QR Code",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 15,
