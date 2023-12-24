@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/model/user.dart';
 import 'package:flutter_application_1/widgets/app_bar.dart';
 import 'package:flutter_application_1/widgets/drawer.dart';
 
 class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Color typeBackgroundColor = (userData.type == "Free")
+      ? Color.fromRGBO(225, 220, 108, 100)
+      : Color.fromARGB(255, 158, 255, 150);
+
+    Color typeTextColor = (userData.type == "Free")
+      ? Color.fromRGBO(176, 134, 1, 100)
+      : Color.fromARGB(255, 15, 175, 1);
+
     return Scaffold(
       appBar: CustomAppBar(),
       drawer: CustomDrawer(),
@@ -24,22 +33,22 @@ class SettingsPage extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 8, bottom: 2),
                 child: Container(
                   decoration: BoxDecoration(
-                      color: const Color.fromRGBO(225, 220, 108, 100),
+                      color: typeBackgroundColor,
                       borderRadius: BorderRadius.circular(5)),
                   padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                   child: Text(
-                    "Free",
+                    userData.type,
                     style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
-                        color: const Color.fromRGBO(176, 134, 1, 100)),
+                        color: typeTextColor),
                   ),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 2),
                 child: Text(
-                  "Ivan Bhagaskara K",
+                  userData.fullname,
                   style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -49,7 +58,7 @@ class SettingsPage extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 2),
                 child: Text(
-                  "ivanbhagas@gmail.com",
+                  userData.email,
                   style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
@@ -166,16 +175,16 @@ class SettingsPage extends StatelessWidget {
                         ),
                         Container(
                           decoration: BoxDecoration(
-                              color: const Color.fromRGBO(225, 220, 108, 100),
+                              color: typeBackgroundColor,
                               borderRadius: BorderRadius.circular(5)),
                           padding:
                               EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                           child: Text(
-                            "Free",
+                            userData.type,
                             style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
-                                color: const Color.fromRGBO(176, 134, 1, 100)),
+                                color: typeTextColor),
                           ),
                         ),
                       ],

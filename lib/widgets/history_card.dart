@@ -22,7 +22,7 @@ class HistoryCard extends StatelessWidget {
         case "A":
           return Color.fromARGB(255, 255, 177, 199);
         default:
-          return Colors.transparent; // atau warna default lainnya
+          return Color.fromARGB(255, 122, 173, 223); // atau warna default lainnya
       }
     })();
 
@@ -37,7 +37,7 @@ class HistoryCard extends StatelessWidget {
         case "A":
           return Color.fromARGB(255, 190, 0, 57);
         default:
-          return Colors.transparent; // atau warna default lainnya
+          return Color.fromARGB(255, 44, 62, 80); // atau warna default lainnya
       }
     })();
 

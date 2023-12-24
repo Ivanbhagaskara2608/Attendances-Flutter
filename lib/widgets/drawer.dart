@@ -1,11 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/model/subject.dart';
+import 'package:flutter_application_1/model/user.dart';
 import 'package:flutter_application_1/pages/buy_subscription_page.dart';
 import 'package:flutter_application_1/pages/dashboard.dart';
 import 'package:flutter_application_1/pages/history_page.dart';
 import 'package:flutter_application_1/pages/settings_page.dart';
 
 class CustomDrawer extends StatelessWidget {
+  Widget buildDrawer(BuildContext context) {
+  if (userData.type == "Free") {
+    return ListTile(
+      onTap: () {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => BuySubscriptionPage()),
+        );
+      },
+      visualDensity: VisualDensity(horizontal: 0, vertical: -4),
+      leading: Icon(
+        Icons.lock,
+        size: 30,
+        color: Colors.green,
+      ),
+      title: Text(
+        "Buy Premium",
+        style: TextStyle(fontSize: 20, color: Colors.green),
+      ),
+    );
+  } else {
+    return Container(); // Atau widget lain jika tidak memenuhi kondisi
+  }
+}
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -63,19 +89,7 @@ class CustomDrawer extends StatelessWidget {
                 size: 30,
               ),
               title: Text("History", style: TextStyle(fontSize: 20))),
-          ListTile(
-              onTap: () {
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => BuySubscriptionPage()));
-              },
-              visualDensity: VisualDensity(horizontal: 0, vertical: -4),
-              leading: Icon(
-                Icons.lock,
-                size: 30,
-                color: Colors.green,
-              ),
-              title: Text("Buy Premium",
-                  style: TextStyle(fontSize: 20, color: Colors.green))),
+          buildDrawer(context),
           ListTile(
               onTap: () {
                 Navigator.pushReplacement(context,

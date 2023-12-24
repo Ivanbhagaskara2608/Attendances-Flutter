@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/model/status_radio.dart';
 import 'package:flutter_application_1/model/zoom_camera.dart';
 import 'package:flutter_application_1/pages/dashboard.dart';
 import 'package:flutter_application_1/widgets/camera_zoom.dart';

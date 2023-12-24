@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/pages/detail_subject.dart';
 
 class SubjectCard extends StatelessWidget {
   final String title;
@@ -16,7 +17,7 @@ class SubjectCard extends StatelessWidget {
 
     return Container(
       height: 117,
-      margin: EdgeInsets.only(right: 30, left: 30, top: 30),
+      margin: EdgeInsets.only(right: 30, left: 30, bottom: 30),
       child: Material(
         borderRadius: BorderRadius.circular(15),
         color: containerColor,
@@ -24,7 +25,8 @@ class SubjectCard extends StatelessWidget {
           splashColor: Colors.grey,
           borderRadius: BorderRadius.circular(15),
           onTap: () {
-            print("Container was tapped");
+            Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => DetailSubjectPage(title, type)));
           },
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
