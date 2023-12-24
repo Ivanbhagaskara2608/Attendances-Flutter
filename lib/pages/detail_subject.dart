@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/pages/subject_dashboard.dart';
+import 'package:flutter_application_1/pages/subject_member_page.dart';
 import 'package:flutter_application_1/widgets/app_bar.dart';
 
 class DetailSubjectPage extends StatefulWidget {
@@ -17,7 +18,7 @@ class _DetailSubjectPageState extends State<DetailSubjectPage> {
   late List<Widget> tabs = [
     SubjectDashboard(widget.title),
     if (widget.type == "created") Center(child: Text("Add")),
-    Center(child: Text("Member")),
+    SubjectMemberPage(),
     Center(child: Text("Setting")),
   ];
 
