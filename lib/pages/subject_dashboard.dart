@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/model/attendance.dart';
+import 'package:flutter_application_1/model/subject.dart';
 import 'package:flutter_application_1/widgets/attendance_card.dart';
 
 class SubjectDashboard extends StatelessWidget {
-  final String title;
+  final Subject currentSubject;
 
-  SubjectDashboard(this.title);
+  SubjectDashboard(this.currentSubject);
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +32,7 @@ class SubjectDashboard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        title,
+                        currentSubject.title,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 30,
@@ -39,7 +40,7 @@ class SubjectDashboard extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "Lorem ipsum dolor sit amet",
+                        currentSubject.description,
                         style: TextStyle(
                           fontSize: 13,
                           color: Colors.white,

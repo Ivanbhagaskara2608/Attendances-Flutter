@@ -5,8 +5,9 @@ class MemberCard extends StatelessWidget {
   final String email;
   final String joinDate;
   final String role;
+  final String type;
 
-  MemberCard(this.fullname, this.email, this.joinDate, this.role);
+  MemberCard(this.fullname, this.email, this.joinDate, this.role, this.type);
 
   @override
   Widget build(BuildContext context) {
@@ -57,34 +58,35 @@ class MemberCard extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  PopupMenuButton(
-                      icon: Icon(
-                        Icons.more_vert,
-                        color: Color.fromARGB(255, 44, 62, 80),
-                      ),
-                      itemBuilder: (context) {
-                        return <PopupMenuEntry>[
-                          PopupMenuItem(
-                              child: ListTile(
-                            title: Text("Edit Access"),
-                            onTap: () {
-                              print("Edit Access");
-                            },
-                          )),
-                          PopupMenuItem(
-                              child: ListTile(
-                            title: Text(
-                              "Kick Member",
-                              style: TextStyle(
-                                color: Colors.red, // Warna merah
+                  if (type == "created")
+                    PopupMenuButton(
+                        icon: Icon(
+                          Icons.more_vert,
+                          color: Color.fromARGB(255, 44, 62, 80),
+                        ),
+                        itemBuilder: (context) {
+                          return <PopupMenuEntry>[
+                            PopupMenuItem(
+                                child: ListTile(
+                              title: Text("Edit Access"),
+                              onTap: () {
+                                print("Edit Access");
+                              },
+                            )),
+                            PopupMenuItem(
+                                child: ListTile(
+                              title: Text(
+                                "Kick Member",
+                                style: TextStyle(
+                                  color: Colors.red, // Warna merah
+                                ),
                               ),
-                            ),
-                            onTap: () {
-                              print("Kick Member");
-                            },
-                          ))
-                        ];
-                      }),
+                              onTap: () {
+                                print("Kick Member");
+                              },
+                            ))
+                          ];
+                        }),
                   Text(
                     role,
                     style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),

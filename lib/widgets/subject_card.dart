@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/model/subject.dart';
 import 'package:flutter_application_1/pages/detail_subject.dart';
 
 class SubjectCard extends StatelessWidget {
-  final String title;
-  final String createdBy;
-  final int totalMembers;
-  final String type;
+  final Subject currentSubject;
 
-  SubjectCard(this.title, this.createdBy, this.totalMembers, this.type);
+  SubjectCard(
+    this.currentSubject
+  );
 
   @override
   Widget build(BuildContext context) {
-    Color containerColor = type == "created"
+    Color containerColor = currentSubject.type == "created"
         ? Color.fromARGB(255, 44, 62, 80)
         : Colors.grey.shade800;
 
@@ -25,8 +25,10 @@ class SubjectCard extends StatelessWidget {
           splashColor: Colors.grey,
           borderRadius: BorderRadius.circular(15),
           onTap: () {
-            Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => DetailSubjectPage(title, type)));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => DetailSubjectPage(currentSubject)));
           },
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
@@ -37,7 +39,7 @@ class SubjectCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      title,
+                      currentSubject.title,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
@@ -51,15 +53,6 @@ class SubjectCard extends StatelessWidget {
                         ),
                         itemBuilder: (context) {
                           return <PopupMenuEntry>[
-                            PopupMenuItem(
-                                child: ListTile(
-                              leading: Icon(Icons.info,
-                                  color: Color.fromARGB(255, 44, 62, 80)),
-                              title: Text("Subject Info"),
-                              onTap: () {
-                                print("info");
-                              },
-                            )),
                             PopupMenuItem(
                                 child: ListTile(
                               leading: Icon(
@@ -79,7 +72,7 @@ class SubjectCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      createdBy,
+                      currentSubject.createdBy,
                       style: TextStyle(fontSize: 13, color: Colors.white),
                     ),
                     Row(
@@ -89,7 +82,7 @@ class SubjectCard extends StatelessWidget {
                           color: Colors.white,
                         ),
                         Text(
-                          totalMembers.toString(),
+                          currentSubject.totalMembers.toString(),
                           style: TextStyle(fontSize: 13, color: Colors.white),
                         )
                       ],

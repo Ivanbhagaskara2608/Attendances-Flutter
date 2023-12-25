@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/model/subject.dart';
 import 'package:flutter_application_1/pages/subject_dashboard.dart';
 import 'package:flutter_application_1/pages/subject_member_page.dart';
+import 'package:flutter_application_1/pages/subject_settings.dart';
 import 'package:flutter_application_1/widgets/app_bar.dart';
 
 class DetailSubjectPage extends StatefulWidget {
-  final String title;
-  final String type;
+  final Subject currentSubject;
 
-  DetailSubjectPage(this.title, this.type);
+  DetailSubjectPage(this.currentSubject);
 
   @override
   State<DetailSubjectPage> createState() => _DetailSubjectPageState();
@@ -16,10 +17,10 @@ class DetailSubjectPage extends StatefulWidget {
 class _DetailSubjectPageState extends State<DetailSubjectPage> {
   int _currentIndex = 0;
   late List<Widget> tabs = [
-    SubjectDashboard(widget.title),
-    if (widget.type == "created") Center(child: Text("Add")),
-    SubjectMemberPage(),
-    Center(child: Text("Setting")),
+    SubjectDashboard(widget.currentSubject),
+    if (widget.currentSubject.type == "created") Center(child: Text("Add")),
+    SubjectMemberPage(widget.currentSubject),
+    SubjectSettingsPage(widget.currentSubject),
   ];
 
   @override
@@ -54,7 +55,7 @@ class _DetailSubjectPageState extends State<DetailSubjectPage> {
                         size: 40,
                       ),
                       label: "Dashboard"),
-                  if (widget.type == "created")
+                  if (widget.currentSubject.type == "created")
                     BottomNavigationBarItem(
                       icon: Icon(
                         Icons.add,

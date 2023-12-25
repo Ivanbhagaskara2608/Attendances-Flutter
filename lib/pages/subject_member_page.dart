@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/model/subject.dart';
 import 'package:flutter_application_1/model/subject_member.dart';
 import 'package:flutter_application_1/widgets/member_card.dart';
 
 class SubjectMemberPage extends StatelessWidget {
-  const SubjectMemberPage({super.key});
+  final Subject currentSubject;
+  const SubjectMemberPage(this.currentSubject, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,7 @@ class SubjectMemberPage extends StatelessWidget {
                 SubjectMember member = subjectMembers[index];
 
                 return MemberCard(member.fullname, member.email,
-                    member.joinDate, member.role);
+                    member.joinDate, member.role, currentSubject.type);
               },
             ))
           ],

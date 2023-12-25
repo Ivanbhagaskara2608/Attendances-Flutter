@@ -16,8 +16,7 @@ class Dashboard extends StatelessWidget {
         itemBuilder: (context, index) {
           Subject currentSubject = subjects[index];
 
-          return SubjectCard(currentSubject.title, currentSubject.createdBy,
-              currentSubject.totalMembers, currentSubject.type);
+          return SubjectCard(currentSubject);
         },
       ),
       floatingActionButton: FloatingActionButton(

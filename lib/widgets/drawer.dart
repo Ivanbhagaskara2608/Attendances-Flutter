@@ -3,42 +3,46 @@ import 'package:flutter_application_1/model/subject.dart';
 import 'package:flutter_application_1/model/user.dart';
 import 'package:flutter_application_1/pages/buy_subscription_page.dart';
 import 'package:flutter_application_1/pages/dashboard.dart';
+import 'package:flutter_application_1/pages/detail_subject.dart';
 import 'package:flutter_application_1/pages/history_page.dart';
 import 'package:flutter_application_1/pages/settings_page.dart';
 
 class CustomDrawer extends StatelessWidget {
   Widget buildDrawer(BuildContext context) {
-  if (userData.type == "Free") {
-    return ListTile(
-      onTap: () {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => BuySubscriptionPage()),
-        );
-      },
-      visualDensity: VisualDensity(horizontal: 0, vertical: -4),
-      leading: Icon(
-        Icons.lock,
-        size: 30,
-        color: Colors.green,
-      ),
-      title: Text(
-        "Buy Premium",
-        style: TextStyle(fontSize: 20, color: Colors.green),
-      ),
-    );
-  } else {
-    return Container(); // Atau widget lain jika tidak memenuhi kondisi
+    if (userData.type == "Free") {
+      return ListTile(
+        onTap: () {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => BuySubscriptionPage()),
+          );
+        },
+        visualDensity: VisualDensity(horizontal: 0, vertical: -4),
+        leading: Icon(
+          Icons.lock,
+          size: 30,
+          color: Colors.green,
+        ),
+        title: Text(
+          "Buy Premium",
+          style: TextStyle(fontSize: 20, color: Colors.green),
+        ),
+      );
+    } else {
+      return Container(); // Atau widget lain jika tidak memenuhi kondisi
+    }
   }
-}
 
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: Column(
         children: [
+          SizedBox(
+            height: 20,
+          ),
           Container(
-            margin: EdgeInsets.symmetric(horizontal: 8.0, vertical: 5.0),
+            margin: EdgeInsets.symmetric(horizontal: 8.0, vertical: 10.0),
             child: Row(
               children: [
                 Image.asset("assets/logo_attendances.png",
@@ -129,7 +133,11 @@ class CustomDrawer extends StatelessWidget {
 
                 return ListTile(
                   onTap: () {
-                    print("Subject: ${currentCreatedSubjects.title}");
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                DetailSubjectPage(currentCreatedSubjects)));
                   },
                   visualDensity: VisualDensity(horizontal: 0, vertical: -4),
                   leading: CircleAvatar(
@@ -181,14 +189,18 @@ class CustomDrawer extends StatelessWidget {
 
                 return ListTile(
                   onTap: () {
-                    print("Subject: ${currentJoinedSubjects.title}");
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                DetailSubjectPage(currentJoinedSubjects)));
                   },
                   visualDensity: VisualDensity(horizontal: 0, vertical: -4),
                   leading: CircleAvatar(
                     backgroundColor: const Color.fromARGB(255, 66, 66, 66),
                     maxRadius: 15,
                     child: Text(
-                      currentJoinedSubjects.title[0],
+                      currentJoinedSubjects.title[0].toUpperCase(),
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 13,
