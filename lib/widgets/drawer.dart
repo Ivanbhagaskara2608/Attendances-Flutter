@@ -37,6 +37,14 @@ class CustomDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Color typeBackgroundColor = (userData.type == "Free")
+        ? Color.fromRGBO(225, 220, 108, 100)
+        : Color.fromARGB(255, 158, 255, 150);
+
+    Color typeTextColor = (userData.type == "Free")
+        ? Color.fromRGBO(176, 134, 1, 100)
+        : Color.fromARGB(255, 15, 175, 1);
+
     return Drawer(
       child: Column(
         children: [
@@ -55,15 +63,15 @@ class CustomDrawer extends StatelessWidget {
                 Spacer(),
                 Container(
                   decoration: BoxDecoration(
-                      color: const Color.fromRGBO(225, 220, 108, 100),
+                      color: typeBackgroundColor,
                       borderRadius: BorderRadius.circular(5)),
                   padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                   child: Text(
-                    "Free",
+                    userData.type,
                     style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
-                        color: const Color.fromRGBO(176, 134, 1, 100)),
+                        color: typeTextColor),
                   ),
                 )
               ],

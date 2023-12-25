@@ -9,4 +9,4 @@ class User {
 }
 
 final userData =
-    User("Ivan Bhagaskara", "ivanbhagas2003@gmail.com", "Male", "26-08-2003", "Premium");
+    User("Ivan Bhagaskara", "ivanbhagas2003@gmail.com", "Male", "26-08-2003", "Free");
