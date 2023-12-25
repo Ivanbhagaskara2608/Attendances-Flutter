@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/model/subject.dart';
 import 'package:flutter_application_1/model/user.dart';
 import 'package:flutter_application_1/pages/buy_subscription_page.dart';
+import 'package:flutter_application_1/pages/create_subject_page.dart';
 import 'package:flutter_application_1/pages/dashboard.dart';
 import 'package:flutter_application_1/pages/detail_subject.dart';
 import 'package:flutter_application_1/pages/history_page.dart';
+import 'package:flutter_application_1/pages/join_subject_page.dart';
 import 'package:flutter_application_1/pages/settings_page.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -226,7 +228,10 @@ class CustomDrawer extends StatelessWidget {
           Container(
             margin: EdgeInsets.symmetric(horizontal: 8.0),
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => JoinSubjectPage()));
+              },
               style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.green,
                   minimumSize: Size.fromHeight(30),
@@ -244,7 +249,10 @@ class CustomDrawer extends StatelessWidget {
           Container(
             margin: EdgeInsets.symmetric(horizontal: 8.0, vertical: 5),
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => CreateSubjectPage()));
+              },
               style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromARGB(255, 44, 62, 80),
                   minimumSize: Size.fromHeight(30),

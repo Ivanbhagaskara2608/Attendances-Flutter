@@ -19,7 +19,7 @@ class CustomDropdownFormField extends StatelessWidget {
         contentPadding: const EdgeInsets.symmetric(vertical: 16),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
-          borderSide: BorderSide(color: Colors.black, width: 2),
+          borderSide: BorderSide(color: Colors.black, width: 1),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),

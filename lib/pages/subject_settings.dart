@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/model/subject.dart';
+import 'package:flutter_application_1/pages/edit_subject_page.dart';
 
 class SubjectSettingsPage extends StatelessWidget {
   final Subject currentSubject;
@@ -47,9 +48,7 @@ class SubjectSettingsPage extends StatelessWidget {
         child: Text(
           "Created by : ${currentSubject.createdBy}",
           style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-              color: Colors.grey),
+              fontSize: 14, fontWeight: FontWeight.bold, color: Colors.grey),
         ),
       ),
       Padding(
@@ -94,70 +93,80 @@ class SubjectSettingsPage extends StatelessWidget {
           color: Colors.grey,
         ),
       ),
-      ListTile(
-        onTap: () {},
-        title: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 26),
-                child: Text(
-                  "Edit Subject",
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 44, 62, 80)),
+      if (currentSubject.type == "created")
+        Column(
+          children: [
+            ListTile(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => EditSubjectPage(currentSubject)));
+              },
+              title: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 26),
+                      child: Text(
+                        "Edit Subject",
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromARGB(255, 44, 62, 80)),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 26, bottom: 10),
+                      child: Text(
+                        "Edit subject data",
+                        style: TextStyle(fontSize: 13),
+                      ),
+                    ),
+                    Divider(
+                      height: 15,
+                      color: Colors.grey,
+                    )
+                  ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 26, bottom: 10),
-                child: Text(
-                  "Edit subject data",
-                  style: TextStyle(fontSize: 13),
+            ),
+            ListTile(
+              onTap: () {},
+              title: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 26),
+                      child: Text(
+                        "Change Invite Code",
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromARGB(255, 44, 62, 80)),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 26, bottom: 10),
+                      child: Text(
+                        "Update Invite Code Subject",
+                        style: TextStyle(fontSize: 13),
+                      ),
+                    ),
+                    Divider(
+                      height: 15,
+                      color: Colors.grey,
+                    )
+                  ],
                 ),
               ),
-              Divider(
-                height: 15,
-                color: Colors.grey,
-              )
-            ],
-          ),
+            ),
+          ],
         ),
-      ),
-      ListTile(
-        onTap: () {},
-        title: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 26),
-                child: Text(
-                  "Change Invite Code",
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 44, 62, 80)),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 26, bottom: 10),
-                child: Text(
-                  "Update Invite Code Subject",
-                  style: TextStyle(fontSize: 13),
-                ),
-              ),
-              Divider(
-                height: 15,
-                color: Colors.grey,
-              )
-            ],
-          ),
-        ),
-      ),
       Spacer(),
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),

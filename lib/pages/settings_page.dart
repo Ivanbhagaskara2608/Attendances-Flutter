@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/model/user.dart';
+import 'package:flutter_application_1/pages/edit_profile_page.dart';
+import 'package:flutter_application_1/pages/subscription_histories_page.dart';
 import 'package:flutter_application_1/widgets/app_bar.dart';
 import 'package:flutter_application_1/widgets/drawer.dart';
 
@@ -7,12 +9,12 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color typeBackgroundColor = (userData.type == "Free")
-      ? Color.fromRGBO(225, 220, 108, 100)
-      : Color.fromARGB(255, 158, 255, 150);
+        ? Color.fromRGBO(225, 220, 108, 100)
+        : Color.fromARGB(255, 158, 255, 150);
 
     Color typeTextColor = (userData.type == "Free")
-      ? Color.fromRGBO(176, 134, 1, 100)
-      : Color.fromARGB(255, 15, 175, 1);
+        ? Color.fromRGBO(176, 134, 1, 100)
+        : Color.fromARGB(255, 15, 175, 1);
 
     return Scaffold(
       appBar: CustomAppBar(),
@@ -23,10 +25,22 @@ class SettingsPage extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.only(top: 40),
-                child: CircleAvatar(
-                  radius: 70,
-                  backgroundImage:
-                      AssetImage("assets/profile.png"), // Use AssetImage here
+                child: Container(
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5), // Warna bayangan
+                        spreadRadius: 2, // Menyebar ke luar
+                        blurRadius: 5, // Besarnya blur
+                        offset: Offset(0, 3), // Posisi bayangan (x, y)
+                      ),
+                    ],
+                    shape: BoxShape.circle,
+                  ),
+                  child: CircleAvatar(
+                    radius: 70,
+                    backgroundImage: AssetImage("assets/profile.png"),
+                  ),
                 ),
               ),
               Padding(
@@ -82,7 +96,10 @@ class SettingsPage extends StatelessWidget {
             ],
           ),
           ListTile(
-            onTap: () {},
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => EditProfilePage()));
+            },
             title: Padding(
               padding: EdgeInsets.symmetric(horizontal: 24),
               child: Column(
@@ -114,7 +131,12 @@ class SettingsPage extends StatelessWidget {
             ),
           ),
           ListTile(
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => SubscriptionHistoriesPage()));
+            },
             title: Padding(
               padding: EdgeInsets.symmetric(horizontal: 24),
               child: Column(
