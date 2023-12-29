@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/model/user.dart';
+import 'package:flutter_application_1/pages/about_us_page.dart';
 import 'package:flutter_application_1/pages/edit_profile_page.dart';
 import 'package:flutter_application_1/pages/subscription_histories_page.dart';
 import 'package:flutter_application_1/widgets/app_bar.dart';
 import 'package:flutter_application_1/widgets/drawer.dart';
+import 'package:flutter_email_sender/flutter_email_sender.dart';
 
 class SettingsPage extends StatelessWidget {
   @override
@@ -285,7 +287,15 @@ class SettingsPage extends StatelessWidget {
             ),
           ),
           ListTile(
-            onTap: () {},
+            onTap: () async {
+              final Email email = Email(
+                recipients: ['help@attendances.id'],
+                body:
+                    'Dear Attendances Support Team,\n\nI need assistance with the Attendances application regarding [briefly describe the issue]. Kindly provide guidance or support to resolve this matter.\n\nThank you,\n[Your Name]\n[Your Contact Information]',
+                subject: 'Assistance Needed: Attendances Application',
+              );
+              await FlutterEmailSender.send(email);
+            },
             title: Padding(
               padding: EdgeInsets.symmetric(horizontal: 24),
               child: Column(
@@ -305,6 +315,41 @@ class SettingsPage extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 26, bottom: 10),
                     child: Text(
                       "Get help from us : help@attendances.id",
+                      style: TextStyle(fontSize: 13),
+                    ),
+                  ),
+                  Divider(
+                    height: 15,
+                    color: Colors.grey,
+                  )
+                ],
+              ),
+            ),
+          ),
+          ListTile(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => AboutUsPage()));
+            },
+            title: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 26),
+                    child: Text(
+                      "About Us",
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Color.fromARGB(255, 44, 62, 80)),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 26, bottom: 10),
+                    child: Text(
+                      "Get Information about us",
                       style: TextStyle(fontSize: 13),
                     ),
                   ),
