@@ -59,9 +59,7 @@ class SubjectDashboard extends StatelessWidget {
                 Attendance attendance = attendances[index];
 
                 return AttendanceCard(
-                  attendance.title,
-                  attendance.createdAt,
-                  attendance.status,
+                  attendance
                 );
               },
             ),

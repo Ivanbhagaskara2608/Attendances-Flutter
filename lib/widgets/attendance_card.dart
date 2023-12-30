@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/model/attendance.dart';
+import 'package:flutter_application_1/pages/attendance_detail_page.dart';
 
 class AttendanceCard extends StatelessWidget {
-  final String title;
-  final String createdAt;
-  final String status;
+  final Attendance attendance;
 
-  AttendanceCard(this.title, this.createdAt, this.status);
+  AttendanceCard(
+    this.attendance
+  );
 
   @override
   Widget build(BuildContext context) {
     Color statusBackgroundColor = (() {
-      switch (status) {
+      switch (attendance.status) {
         case "P":
           return Color.fromARGB(255, 158, 255, 150);
         case "L":
@@ -26,7 +28,7 @@ class AttendanceCard extends StatelessWidget {
     })();
 
     Color statusTextColor = (() {
-      switch (status) {
+      switch (attendance.status) {
         case "P":
           return Color.fromARGB(255, 15, 175, 1);
         case "L":
@@ -53,7 +55,10 @@ class AttendanceCard extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           splashColor: Colors.grey,
-          onTap: () {},
+          onTap: () {
+            Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => AttendanceDetailPage(attendance)));
+          },
           borderRadius: BorderRadius.circular(15),
           child: Padding(
             padding: EdgeInsets.symmetric(vertical: 22, horizontal: 12),
@@ -74,14 +79,14 @@ class AttendanceCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    title,
+                    attendance.title,
                     style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                         color: Color.fromARGB(255, 44, 62, 80)),
                   ),
                   Text(
-                    createdAt,
+                    attendance.createdAt,
                     style: TextStyle(fontSize: 12),
                   )
                 ],
@@ -91,7 +96,7 @@ class AttendanceCard extends StatelessWidget {
                 backgroundColor: statusBackgroundColor,
                 maxRadius: 18,
                 child: Text(
-                  status.toUpperCase(),
+                  attendance.status.toUpperCase(),
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
