@@ -1,13 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/model/attendance.dart';
 import 'package:flutter_application_1/pages/attendance_detail_page.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:location/location.dart';
 
 class AttendanceCard extends StatelessWidget {
   final Attendance attendance;
 
-  AttendanceCard(
-    this.attendance
-  );
+  AttendanceCard(this.attendance);
+
+  Future<Position> getCurrentLocation() async {
+    Location location = Location();
+    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      // return Future.error("Location service are disables!");
+      location.requestPermission();
+    }
+
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error("Location permission are denied!");
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      return Future.error(
+          "Location permission are denied forever, we cannot request permission");
+    }
+
+    return await Geolocator.getCurrentPosition();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,8 +80,12 @@ class AttendanceCard extends StatelessWidget {
         child: InkWell(
           splashColor: Colors.grey,
           onTap: () {
-            Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => AttendanceDetailPage(attendance)));
+            getCurrentLocation().then((value) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => AttendanceDetailPage(attendance, value.latitude, value.longitude)));
+            });
           },
           borderRadius: BorderRadius.circular(15),
           child: Padding(
