@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/model/attendance.dart';
+import 'package:flutter_application_1/model/attendances_data.dart';
 import 'package:flutter_application_1/model/subject.dart';
 import 'package:flutter_application_1/widgets/attendance_card.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 class SubjectDashboard extends StatelessWidget {
   final Subject currentSubject;
@@ -17,7 +19,7 @@ class SubjectDashboard extends StatelessWidget {
           Container(
             width: double.infinity,
             height: 117,
-            margin: EdgeInsets.only(bottom: 25),
+            margin: EdgeInsets.only(bottom: 22),
             child: Material(
               borderRadius: BorderRadius.circular(15),
               color: Color.fromARGB(255, 44, 62, 80),
@@ -52,15 +54,54 @@ class SubjectDashboard extends StatelessWidget {
               ),
             ),
           ),
+          if (currentSubject.type == "created")
+            Container(
+              width: double.infinity,
+              height: 165,
+              margin: EdgeInsets.only(bottom: 22),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  border: Border.all(color: Colors.grey)),
+              child: SfCartesianChart(
+                legend:
+                    Legend(isVisible: true, position: LegendPosition.bottom),
+                tooltipBehavior: TooltipBehavior(enable: true),
+                series: [
+                  StackedColumnSeries<AttendanceData, String>(
+                    dataSource: chartData,
+                    xValueMapper: (AttendanceData data, _) => data.month,
+                    yValueMapper: (AttendanceData data, _) => data.presence,
+                    name: "Presence",
+                  ),
+                  StackedColumnSeries<AttendanceData, String>(
+                    dataSource: chartData,
+                    xValueMapper: (AttendanceData data, _) => data.month,
+                    yValueMapper: (AttendanceData data, _) => data.leave,
+                    name: "Leave",
+                  ),
+                  StackedColumnSeries<AttendanceData, String>(
+                    dataSource: chartData,
+                    xValueMapper: (AttendanceData data, _) => data.month,
+                    yValueMapper: (AttendanceData data, _) => data.sick,
+                    name: "Sick",
+                  ),
+                  StackedColumnSeries<AttendanceData, String>(
+                    dataSource: chartData,
+                    xValueMapper: (AttendanceData data, _) => data.month,
+                    yValueMapper: (AttendanceData data, _) => data.alpha,
+                    name: "Alpha",
+                  ),
+                ],
+                primaryXAxis: CategoryAxis(),
+              ),
+            ),
           Expanded(
             child: ListView.builder(
               itemCount: attendances.length,
               itemBuilder: (context, index) {
                 Attendance attendance = attendances[index];
 
-                return AttendanceCard(
-                  attendance
-                );
+                return AttendanceCard(attendance);
               },
             ),
           ),

@@ -6,25 +6,30 @@ import 'package:flutter_application_1/pages/scan_attendance.dart';
 import 'package:flutter_application_1/widgets/textfield_custom.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class AttendanceDetailPage extends StatefulWidget {
   final Attendance attendance;
-  final double latitude;
-  final double longitude;
-  AttendanceDetailPage(this.attendance, this.latitude, this.longitude, {super.key});
+  // final double latitude;
+  // final double longitude;
+  AttendanceDetailPage(this.attendance, {super.key});
 
   @override
   State<AttendanceDetailPage> createState() => _AttendanceDetailPageState();
 }
 
 class _AttendanceDetailPageState extends State<AttendanceDetailPage> {
-  late LatLng userLatLng = LatLng(widget.latitude, widget.longitude);
+  late LatLng userLatLng = LatLng(0, 0);
+  late bool isLocationLoading = true;
   // Get current location
-  Future<Position> getCurrentLocation() async {
-    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      return Future.error("Location service are disables!");
+  Future<void> getCurrentLocation() async {
+    Location location = Location();
+    PermissionStatus permissionGranted;
+
+    permissionGranted = await location.hasPermission();
+    if (permissionGranted == PermissionStatus.denied) {
+      permissionGranted = await location.requestPermission();
     }
 
     LocationPermission permission = await Geolocator.checkPermission();
@@ -40,7 +45,22 @@ class _AttendanceDetailPageState extends State<AttendanceDetailPage> {
           "Location permission are denied forever, we cannot request permission");
     }
 
-    return await Geolocator.getCurrentPosition();
+    setState(() {
+      isLocationLoading = true;
+    });
+
+    Position position = await Geolocator.getCurrentPosition();
+
+    setState(() {
+      userLatLng = LatLng(position.latitude, position.longitude);
+      isLocationLoading = false;
+    });
+  }
+
+  @override
+  void initState() {
+    getCurrentLocation();
+    super.initState();
   }
 
   @override
@@ -322,20 +342,40 @@ class _AttendanceDetailPageState extends State<AttendanceDetailPage> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                 ),
-                child: GoogleMap(
-                  zoomGesturesEnabled: true,
-                  mapType: MapType.normal,
-                  markers: {positionMarker},
-                  initialCameraPosition: mapInitialPosition,
-                  onMapCreated: (GoogleMapController controller) {
-                    mapController.complete(controller);
-                  },
-                ),
+                child: (isLocationLoading)
+                    ? Center(
+                        child: CircularProgressIndicator(
+                          color: Color.fromARGB(255, 44, 62, 80),
+                          backgroundColor: Colors.grey,
+                        ),
+                      )
+                    : (userLatLng.latitude != 0 && userLatLng.longitude != 0)
+                        ? GoogleMap(
+                            zoomGesturesEnabled: true,
+                            mapType: MapType.normal,
+                            markers: {positionMarker},
+                            initialCameraPosition: mapInitialPosition,
+                            onMapCreated: (GoogleMapController controller) {
+                              mapController.complete(controller);
+                            },
+                          )
+                        : Center(
+                            child: Text(
+                              'Turn On your location',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.red,
+                              ),
+                            ),
+                          ),
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 10),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    getCurrentLocation();
+                  },
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Color.fromARGB(255, 44, 62, 80),
                       minimumSize: Size.fromHeight(35),

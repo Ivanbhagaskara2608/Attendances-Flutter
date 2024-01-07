@@ -80,12 +80,16 @@ class AttendanceCard extends StatelessWidget {
         child: InkWell(
           splashColor: Colors.grey,
           onTap: () {
-            getCurrentLocation().then((value) {
-              Navigator.push(
+            // getCurrentLocation().then((value) {
+            //   Navigator.push(
+            //     context,
+            //     MaterialPageRoute(
+            //         builder: (context) => AttendanceDetailPage(attendance, value.latitude, value.longitude)));
+            // });
+            Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => AttendanceDetailPage(attendance, value.latitude, value.longitude)));
-            });
+                    builder: (context) => AttendanceDetailPage(attendance)));
           },
           borderRadius: BorderRadius.circular(15),
           child: Padding(
