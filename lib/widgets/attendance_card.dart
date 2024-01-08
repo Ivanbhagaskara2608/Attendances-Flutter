@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/model/attendance.dart';
+import 'package:flutter_application_1/model/subject.dart';
 import 'package:flutter_application_1/pages/attendance_detail_page.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:location/location.dart';
 
 class AttendanceCard extends StatelessWidget {
   final Attendance attendance;
+  final Subject currentSubject;
 
-  AttendanceCard(this.attendance);
+  AttendanceCard(this.attendance, this.currentSubject);
 
   Future<Position> getCurrentLocation() async {
     Location location = Location();
@@ -89,7 +91,7 @@ class AttendanceCard extends StatelessWidget {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => AttendanceDetailPage(attendance)));
+                    builder: (context) => AttendanceDetailPage(attendance, currentSubject)));
           },
           borderRadius: BorderRadius.circular(15),
           child: Padding(

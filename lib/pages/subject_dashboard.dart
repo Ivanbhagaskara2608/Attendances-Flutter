@@ -68,31 +68,31 @@ class SubjectDashboard extends StatelessWidget {
                 tooltipBehavior: TooltipBehavior(enable: true),
                 series: [
                   StackedColumnSeries<AttendanceData, String>(
-                    dataSource: chartData,
-                    xValueMapper: (AttendanceData data, _) => data.month,
-                    yValueMapper: (AttendanceData data, _) => data.presence,
-                    name: "Presence",
-                  ),
+                      dataSource: chartData,
+                      xValueMapper: (AttendanceData data, _) => data.month,
+                      yValueMapper: (AttendanceData data, _) => data.presence,
+                      name: "Presence",
+                      animationDuration: 1000),
                   StackedColumnSeries<AttendanceData, String>(
-                    dataSource: chartData,
-                    xValueMapper: (AttendanceData data, _) => data.month,
-                    yValueMapper: (AttendanceData data, _) => data.leave,
-                    name: "Leave",
-                  ),
+                      dataSource: chartData,
+                      xValueMapper: (AttendanceData data, _) => data.month,
+                      yValueMapper: (AttendanceData data, _) => data.leave,
+                      name: "Leave",
+                      animationDuration: 1000),
                   StackedColumnSeries<AttendanceData, String>(
-                    dataSource: chartData,
-                    xValueMapper: (AttendanceData data, _) => data.month,
-                    yValueMapper: (AttendanceData data, _) => data.sick,
-                    name: "Sick",
-                  ),
+                      dataSource: chartData,
+                      xValueMapper: (AttendanceData data, _) => data.month,
+                      yValueMapper: (AttendanceData data, _) => data.sick,
+                      name: "Sick",
+                      animationDuration: 1000),
                   StackedColumnSeries<AttendanceData, String>(
-                    dataSource: chartData,
-                    xValueMapper: (AttendanceData data, _) => data.month,
-                    yValueMapper: (AttendanceData data, _) => data.alpha,
-                    name: "Alpha",
-                  ),
+                      dataSource: chartData,
+                      xValueMapper: (AttendanceData data, _) => data.month,
+                      yValueMapper: (AttendanceData data, _) => data.alpha,
+                      name: "Alpha",
+                      animationDuration: 1000),
                 ],
-                primaryXAxis: CategoryAxis(),
+                primaryXAxis: CategoryAxis(labelStyle: TextStyle(fontSize: 8)),
               ),
             ),
           Expanded(
@@ -101,7 +101,7 @@ class SubjectDashboard extends StatelessWidget {
               itemBuilder: (context, index) {
                 Attendance attendance = attendances[index];
 
-                return AttendanceCard(attendance);
+                return AttendanceCard(attendance, currentSubject);
               },
             ),
           ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/model/zoom_camera.dart';
-import 'package:flutter_application_1/pages/dashboard.dart';
 import 'package:flutter_application_1/widgets/camera_zoom.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
@@ -45,15 +44,6 @@ class _AttendanceScannerState extends State<AttendanceScanner> {
                 ))
           ],
           backgroundColor: Colors.white,
-          leading: IconButton(
-              onPressed: () {
-                Navigator.pop(context,
-                    MaterialPageRoute(builder: (context) => Dashboard()));
-              },
-              icon: Icon(
-                Icons.arrow_back_ios_new_rounded,
-                color: Color.fromARGB(255, 44, 62, 80),
-              )),
           centerTitle: true,
           title: Text(
             "Scan Attendance Code",

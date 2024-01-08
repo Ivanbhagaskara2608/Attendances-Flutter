@@ -24,6 +24,7 @@ class _CustomTextFIeldState extends State<CustomTextFIeld> {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      cursorColor: Color.fromARGB(255, 44, 62, 80),
       controller: inputController,
       decoration: InputDecoration(
           hintText: widget.hintName,

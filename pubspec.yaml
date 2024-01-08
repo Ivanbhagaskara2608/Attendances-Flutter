@@ -48,6 +48,7 @@ dependencies:
   sliding_up_panel: ^2.0.0+1
   geolocator: ^10.1.0
   location: ^5.0.3
+  rotating_icon_button: ^1.0.0
 
 dev_dependencies:
   flutter_test:
