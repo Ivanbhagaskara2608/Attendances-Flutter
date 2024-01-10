@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/model/attendance.dart';
-import 'package:flutter_application_1/widgets/textfield_custom.dart';
+import 'package:flutter_application_1/widgets/small_textfield_custom.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class AttendanceDetailAdminView extends StatelessWidget {
@@ -192,7 +192,7 @@ class AttendanceDetailAdminView extends StatelessWidget {
         SizedBox(
           height: 10,
         ),
-        CustomTextFIeld("Location"),
+        SmallCustomTextFIeld("Location"),
         Padding(
           padding: const EdgeInsets.only(top: 10),
           child: ElevatedButton(

@@ -5,6 +5,8 @@ import 'package:flutter_application_1/pages/edit_profile_page.dart';
 import 'package:flutter_application_1/pages/subscription_histories_page.dart';
 import 'package:flutter_application_1/widgets/app_bar.dart';
 import 'package:flutter_application_1/widgets/drawer.dart';
+import 'package:flutter_application_1/widgets/small_password_textfield.dart';
+import 'package:flutter_application_1/widgets/small_textfield_custom.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -170,7 +172,14 @@ class SettingsPage extends StatelessWidget {
             ),
           ),
           ListTile(
-            onTap: () {},
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return DialogSubscriptionStatus();
+                },
+              );
+            },
             title: Padding(
               padding: EdgeInsets.symmetric(horizontal: 24),
               child: Column(
@@ -223,7 +232,14 @@ class SettingsPage extends StatelessWidget {
             ),
           ),
           ListTile(
-            onTap: () {},
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return DialogChangeEmail();
+                },
+              );
+            },
             title: Padding(
               padding: EdgeInsets.symmetric(horizontal: 24),
               child: Column(
@@ -255,7 +271,14 @@ class SettingsPage extends StatelessWidget {
             ),
           ),
           ListTile(
-            onTap: () {},
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return DialogChangePassword();
+                },
+              );
+            },
             title: Padding(
               padding: EdgeInsets.symmetric(horizontal: 24),
               child: Column(
@@ -364,7 +387,14 @@ class SettingsPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return DialogLogout();
+                  },
+                );
+              },
               style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromARGB(255, 190, 0, 57),
                   minimumSize: Size.fromHeight(35),
@@ -380,6 +410,290 @@ class SettingsPage extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class DialogLogout extends StatelessWidget {
+  const DialogLogout({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 35),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
+        child: Column(mainAxisSize: MainAxisSize.min, children: [
+          Image.asset("assets/icon_warning.png", width: 80, height: 80),
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            "Are you sure?",
+            style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Color.fromARGB(255, 175, 134, 1)),
+          ),
+          Text("You will be signed out of your account"),
+          SizedBox(
+            height: 28,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Expanded(
+                  child: ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromARGB(255, 199, 0, 57),
+                    minimumSize: Size.fromHeight(35),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0))),
+                child: Text(
+                  "Logout",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                      color: Colors.white),
+                ),
+              )),
+              SizedBox(
+                width: 20,
+              ),
+              Expanded(
+                  child: ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromARGB(255, 44, 62, 80),
+                    minimumSize: Size.fromHeight(35),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0))),
+                child: Text(
+                  "Cancel",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                      color: Colors.white),
+                ),
+              ))
+            ],
+          ),
+        ]),
+      ),
+    );
+  }
+}
+
+class DialogSubscriptionStatus extends StatelessWidget {
+  const DialogSubscriptionStatus({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      insetPadding: EdgeInsets.symmetric(horizontal: 70),
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
+        child: Column(mainAxisSize: MainAxisSize.min, children: [
+          Align(
+            alignment: Alignment.topRight,
+            child: IconButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              icon: Icon(Icons.close),
+            ),
+          ),
+          Image.asset(
+            (userData.type == "Free")
+                ? "assets/icon_free.png"
+                : "assets/icon_premium.png",
+            width: 90,
+            height: 90,
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            userData.type,
+            style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: (userData.type == "Free")
+                    ? Color.fromARGB(255, 175, 134, 1)
+                    : Color.fromARGB(255, 15, 175, 1)),
+          ),
+          Text(
+            "Valid until :",
+            style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+                color: Color.fromARGB(255, 44, 62, 80)),
+          ),
+          Text(
+            (userData.type == "Free") ? "-" : "10 January 2024",
+            style:
+                TextStyle(fontSize: 13, color: Color.fromARGB(255, 44, 62, 80)),
+          ),
+        ]),
+      ),
+    );
+  }
+}
+
+class DialogChangeEmail extends StatelessWidget {
+  const DialogChangeEmail({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 35),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
+        child: Column(mainAxisSize: MainAxisSize.min, children: [
+          Image.asset("assets/icon_warning.png", width: 80, height: 80),
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            "Are you sure?",
+            style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Color.fromARGB(255, 175, 134, 1)),
+          ),
+          Text("Your email address will be changes!"),
+          SizedBox(
+            height: 20,
+          ),
+          SmallCustomTextFIeld("New Email Address"),
+          SmallCustomPasswordTextFIeld("Your Current Password"),
+          SizedBox(
+            height: 28,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Expanded(
+                  child: ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromARGB(255, 199, 0, 57),
+                    minimumSize: Size.fromHeight(35),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0))),
+                child: Text(
+                  "Yes, I'm sure!",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                      color: Colors.white),
+                ),
+              )),
+              SizedBox(
+                width: 20,
+              ),
+              Expanded(
+                  child: ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromARGB(255, 44, 62, 80),
+                    minimumSize: Size.fromHeight(35),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0))),
+                child: Text(
+                  "Cancel",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                      color: Colors.white),
+                ),
+              ))
+            ],
+          ),
+        ]),
+      ),
+    );
+  }
+}
+
+class DialogChangePassword extends StatelessWidget {
+  const DialogChangePassword({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 35),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
+        child: Column(mainAxisSize: MainAxisSize.min, children: [
+          Image.asset("assets/icon_warning.png", width: 80, height: 80),
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            "Are you sure?",
+            style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Color.fromARGB(255, 175, 134, 1)),
+          ),
+          Text("Your password will be changes!"),
+          SmallCustomPasswordTextFIeld("New Password"),
+          SmallCustomPasswordTextFIeld("New Password Confirmation"),
+          SmallCustomPasswordTextFIeld("Your Current Password"),
+          SizedBox(
+            height: 28,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Expanded(
+                  child: ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromARGB(255, 199, 0, 57),
+                    minimumSize: Size.fromHeight(35),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0))),
+                child: Text(
+                  "Yes, I'm sure!",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                      color: Colors.white),
+                ),
+              )),
+              SizedBox(
+                width: 20,
+              ),
+              Expanded(
+                  child: ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromARGB(255, 44, 62, 80),
+                    minimumSize: Size.fromHeight(35),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0))),
+                child: Text(
+                  "Cancel",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                      color: Colors.white),
+                ),
+              ))
+            ],
+          ),
+        ]),
       ),
     );
   }

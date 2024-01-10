@@ -96,20 +96,7 @@ class _AttendanceScannerState extends State<AttendanceScanner> {
                                 showDialog(
                                   context: context,
                                   builder: (context) {
-                                    return AlertDialog(
-                                      title: Text('Barcode Detected'),
-                                      content: Text('Code: $code'),
-                                      actions: <Widget>[
-                                        TextButton(
-                                          onPressed: () {
-                                            isScanCompleted = false;
-                                            Navigator.of(context)
-                                                .pop(); // Close the dialog
-                                          },
-                                          child: Text('Close'),
-                                        ),
-                                      ],
-                                    );
+                                    return CustomDialog(code!);
                                   },
                                 );
                               }
@@ -132,9 +119,9 @@ class _AttendanceScannerState extends State<AttendanceScanner> {
                                         element.isSelected = false;
                                       }
                                       radioItems[index].isSelected = true;
-                                      
                                     });
-                                    scannerController.setZoomScale(radioItems[index].zoom);
+                                    scannerController
+                                        .setZoomScale(radioItems[index].zoom);
                                   },
                                   child: CameraZoomIndicator(radioItems[index]),
                                 );
@@ -175,7 +162,14 @@ class _AttendanceScannerState extends State<AttendanceScanner> {
                       Padding(
                         padding: const EdgeInsets.only(top: 20),
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return CustomDialog("test");
+                              },
+                            );
+                          },
                           style: ElevatedButton.styleFrom(
                               backgroundColor: Color.fromARGB(255, 44, 62, 80),
                               minimumSize: Size.fromHeight(35),
@@ -214,6 +208,55 @@ class _AttendanceScannerState extends State<AttendanceScanner> {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class CustomDialog extends StatelessWidget {
+  final String code;
+  const CustomDialog(this.code, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 35),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
+        child: Column(mainAxisSize: MainAxisSize.min, children: [
+          Image.asset("assets/icon_check_circle.png", width: 80, height: 80),
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            "Success",
+            style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Color.fromARGB(255, 44, 62, 80)),
+          ),
+          Text('Code: $code'),
+          SizedBox(
+            height: 50,
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            style: ElevatedButton.styleFrom(
+                backgroundColor: Color.fromARGB(255, 44, 62, 80),
+                minimumSize: Size.fromHeight(35),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0))),
+            child: Text(
+              "Close",
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 12,
+                  color: Colors.white),
+            ),
+          ),
+        ]),
       ),
     );
   }

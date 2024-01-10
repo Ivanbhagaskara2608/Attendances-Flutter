@@ -140,7 +140,13 @@ class SubjectSettingsPage extends StatelessWidget {
                 ),
               ),
               ListTile(
-                onTap: () {},
+                onTap: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return DialogChangeCode();
+                      });
+                },
                 title: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 24),
                   child: Column(
@@ -176,7 +182,13 @@ class SubjectSettingsPage extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return DialogLeave();
+                  });
+            },
             style: ElevatedButton.styleFrom(
                 backgroundColor: const Color.fromARGB(255, 190, 0, 57),
                 minimumSize: Size.fromHeight(35),
@@ -192,6 +204,160 @@ class SubjectSettingsPage extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class DialogChangeCode extends StatelessWidget {
+  const DialogChangeCode({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      insetPadding: EdgeInsets.symmetric(horizontal: 70),
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 35),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
+        child: Column(mainAxisSize: MainAxisSize.min, children: [
+          Image.asset("assets/icon_warning.png", width: 80, height: 80),
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            "Are you sure?",
+            style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Color.fromARGB(255, 175, 134, 1)),
+          ),
+          Text(
+            "You will be change invite code for this subject",
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(
+            height: 28,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Expanded(
+                  child: ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromARGB(255, 199, 0, 57),
+                    minimumSize: Size.fromHeight(35),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0))),
+                child: Text(
+                  "Confirm",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                      color: Colors.white),
+                ),
+              )),
+              SizedBox(
+                width: 20,
+              ),
+              Expanded(
+                  child: ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromARGB(255, 44, 62, 80),
+                    minimumSize: Size.fromHeight(35),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0))),
+                child: Text(
+                  "Cancel",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                      color: Colors.white),
+                ),
+              ))
+            ],
+          ),
+        ]),
+      ),
+    );
+  }
+}
+
+class DialogLeave extends StatelessWidget {
+  const DialogLeave({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      insetPadding: EdgeInsets.symmetric(horizontal: 70),
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 35),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
+        child: Column(mainAxisSize: MainAxisSize.min, children: [
+          Image.asset("assets/icon_warning.png", width: 80, height: 80),
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            "Are you sure?",
+            style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Color.fromARGB(255, 175, 134, 1)),
+          ),
+          Text(
+            "You will be leave this subject",
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(
+            height: 28,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Expanded(
+                  child: ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromARGB(255, 199, 0, 57),
+                    minimumSize: Size.fromHeight(35),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0))),
+                child: Text(
+                  "Leave",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                      color: Colors.white),
+                ),
+              )),
+              SizedBox(
+                width: 20,
+              ),
+              Expanded(
+                  child: ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromARGB(255, 44, 62, 80),
+                    minimumSize: Size.fromHeight(35),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0))),
+                child: Text(
+                  "Cancel",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                      color: Colors.white),
+                ),
+              ))
+            ],
+          ),
+        ]),
+      ),
     );
   }
 }

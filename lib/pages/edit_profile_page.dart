@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/model/user.dart';
 import 'package:flutter_application_1/widgets/calendar_textfield.dart';
 import 'package:flutter_application_1/widgets/dropdown_custom.dart';
+import 'package:flutter_application_1/widgets/small_password_textfield.dart';
 import 'package:flutter_application_1/widgets/textfield_custom.dart';
 
 class EditProfilePage extends StatelessWidget {
@@ -147,7 +148,14 @@ class EditProfilePage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 30),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return DialogEditProfile();
+                      },
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Color.fromARGB(255, 44, 62, 80),
                       minimumSize: Size.fromHeight(35),
@@ -171,7 +179,14 @@ class EditProfilePage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 5),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return DialogDeleteAccount();
+                      },
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Color.fromARGB(255, 190, 0, 57),
                       minimumSize: Size.fromHeight(35),
@@ -190,6 +205,173 @@ class EditProfilePage extends StatelessWidget {
           ),
         ),
       ]),
+    );
+  }
+}
+
+class DialogEditProfile extends StatelessWidget {
+  const DialogEditProfile({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 35),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
+        child: Column(mainAxisSize: MainAxisSize.min, children: [
+          Image.asset("assets/icon_warning.png", width: 80, height: 80),
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            "Are you sure?",
+            style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Color.fromARGB(255, 175, 134, 1)),
+          ),
+          Text("You won't be able to revert this!"),
+          SizedBox(
+            height: 28,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Expanded(
+                  child: ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromARGB(255, 44, 62, 80),
+                    minimumSize: Size.fromHeight(35),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0))),
+                child: Text(
+                  "Proceed",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                      color: Colors.white),
+                ),
+              )),
+              SizedBox(
+                width: 20,
+              ),
+              Expanded(
+                  child: ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromARGB(255, 199, 0, 57),
+                    minimumSize: Size.fromHeight(35),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0))),
+                child: Text(
+                  "Cancel",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                      color: Colors.white),
+                ),
+              ))
+            ],
+          ),
+        ]),
+      ),
+    );
+  }
+}
+
+class DialogDeleteAccount extends StatelessWidget {
+  const DialogDeleteAccount({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 35),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
+        child: Column(mainAxisSize: MainAxisSize.min, children: [
+          Image.asset("assets/icon_danger.png", width: 80, height: 80),
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            "Are you sure?",
+            style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Color.fromARGB(255, 199, 0, 57)),
+          ),
+          Text("You can't restore your account again!"),
+          SmallCustomPasswordTextFIeld("Your Current Password"),
+          SizedBox(
+            height: 28,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Expanded(
+                  child: ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromARGB(255, 199, 0, 57),
+                    minimumSize: Size.fromHeight(35),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0))),
+                child: Text(
+                  "Yes, I'm sure!",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                      color: Colors.white),
+                ),
+              )),
+              SizedBox(
+                width: 20,
+              ),
+              Expanded(
+                  child: ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromARGB(255, 44, 62, 80),
+                    minimumSize: Size.fromHeight(35),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0))),
+                child: Text(
+                  "Cancel",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                      color: Colors.white),
+                ),
+              ))
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            style: ElevatedButton.styleFrom(
+                backgroundColor: Color.fromARGB(255, 175, 134, 1),
+                minimumSize: Size.fromHeight(35),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0))),
+            child: Text(
+              "No, i'm just want to logout",
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 12,
+                  color: Colors.white),
+            ),
+          )
+        ]),
+      ),
     );
   }
 }
