@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/model/attendance.dart';
 import 'package:flutter_application_1/pages/scan_attendance.dart';
+import 'package:flutter_application_1/widgets/small_dropdown.dart';
+import 'package:flutter_application_1/widgets/small_textfield_custom.dart';
 import 'package:flutter_application_1/widgets/textfield_custom.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -303,7 +305,14 @@ class AttendanceDetailMemberView extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 10),
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return DialogAttend();
+                  },
+                );
+              },
               style: ElevatedButton.styleFrom(
                   backgroundColor: Color.fromARGB(255, 190, 0, 57),
                   minimumSize: Size.fromHeight(35),
@@ -319,6 +328,109 @@ class AttendanceDetailMemberView extends StatelessWidget {
             ),
           ),
         ])),
+      ),
+    );
+  }
+}
+
+// ignore: must_be_immutable
+class DialogAttend extends StatelessWidget {
+  final List<String> statusItems = [
+    'Leave',
+    'Sick',
+  ];
+  String? selectedValue;
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 35),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
+        child: Column(mainAxisSize: MainAxisSize.min, children: [
+          Image.asset("assets/icon_warning.png", width: 80, height: 80),
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            "Are you sure?",
+            style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Color.fromARGB(255, 175, 134, 1)),
+          ),
+          Text('Your status will change not "present"'),
+          SizedBox(
+            height: 20,
+          ),
+          SmallDropDown(items: statusItems, selectedValue: selectedValue),
+          SizedBox(
+            height: 15,
+          ),
+          SmallCustomTextFIeld("Reason"),
+          Container(
+            margin: EdgeInsets.only(top: 15),
+            width: double.infinity,
+            height: 70,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                border: Border.all(
+                    color: Color.fromARGB(255, 44, 62, 80), width: 1)),
+            child: Center(
+              child: IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.add,
+                    size: 30,
+                  )),
+            ),
+          ),
+          SizedBox(
+            height: 28,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Expanded(
+                  child: ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromARGB(255, 199, 0, 57),
+                    minimumSize: Size.fromHeight(35),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0))),
+                child: Text(
+                  "Yes, I'm sure!",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                      color: Colors.white),
+                ),
+              )),
+              SizedBox(
+                width: 20,
+              ),
+              Expanded(
+                  child: ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromARGB(255, 44, 62, 80),
+                    minimumSize: Size.fromHeight(35),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0))),
+                child: Text(
+                  "Cancel",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                      color: Colors.white),
+                ),
+              ))
+            ],
+          ),
+        ]),
       ),
     );
   }

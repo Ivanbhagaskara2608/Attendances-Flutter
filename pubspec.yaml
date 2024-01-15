@@ -49,6 +49,7 @@ dependencies:
   geolocator: ^10.1.0
   location: ^5.0.3
   rotating_icon_button: ^1.0.0
+  toggle_switch: ^2.1.0
 
 dev_dependencies:
   flutter_test:

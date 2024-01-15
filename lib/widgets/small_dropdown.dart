@@ -1,12 +1,12 @@
-import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class CustomDropdownFormField extends StatelessWidget {
+class SmallDropDown extends StatelessWidget {
   final List<String> items;
   String? selectedValue;
 
-  CustomDropdownFormField({
+  SmallDropDown({
     required this.items,
     required this.selectedValue,
   });
@@ -16,7 +16,7 @@ class CustomDropdownFormField extends StatelessWidget {
     return DropdownButtonFormField2<String>(
       isExpanded: true,
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.symmetric(vertical: 16),
+        contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
           borderSide: BorderSide(color: Colors.black, width: 1),
@@ -29,7 +29,7 @@ class CustomDropdownFormField extends StatelessWidget {
           ),
         ),
       ),
-      hint: const Text('Select Your Gender'),
+      hint: const Text('-- Status --'),
       items: items
           .map((item) => DropdownMenuItem<String>(
                 value: item,
@@ -64,7 +64,7 @@ class CustomDropdownFormField extends StatelessWidget {
         ),
       ),
       menuItemStyleData: const MenuItemStyleData(
-        padding: EdgeInsets.symmetric(horizontal: 16),
+        padding: EdgeInsets.symmetric(horizontal: 6),
       ),
     );
   }
