@@ -248,12 +248,9 @@ class AttendanceDetailMemberView extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          Container(
+          SizedBox(
             width: double.infinity,
             height: 130,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-            ),
             child: (isLocationLoading)
                 ? Center(
                     child: CircularProgressIndicator(
@@ -363,7 +360,10 @@ class DialogAttend extends StatelessWidget {
           SizedBox(
             height: 20,
           ),
-          SmallDropDown(items: statusItems, selectedValue: selectedValue),
+          SmallDropDown(
+              items: statusItems,
+              selectedValue: selectedValue,
+              hintText: "-- Status --"),
           SizedBox(
             height: 15,
           ),

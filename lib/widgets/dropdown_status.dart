@@ -2,36 +2,35 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class SmallDropDown extends StatelessWidget {
+class DropDownStatus extends StatelessWidget {
   final List<String> items;
-  final String hintText;
   String? selectedValue;
 
-  SmallDropDown({
-    required this.items,
-    required this.selectedValue,
-    required this.hintText,
-  });
+  DropDownStatus(
+    this.items,
+    this.selectedValue,
+  );
 
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField2<String>(
+      style: TextStyle(fontSize: 12, color: Color.fromARGB(255, 44, 62, 80)),
       isExpanded: true,
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+        contentPadding: EdgeInsets.symmetric(vertical: 3, horizontal: 5),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
-          borderSide: BorderSide(color: Colors.black, width: 1),
+          borderRadius: BorderRadius.circular(5),
+          borderSide: BorderSide(color: Colors.grey, width: 1),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(5),
           borderSide: BorderSide(
             color: Color.fromARGB(255, 44, 62, 80),
             width: 2,
           ),
         ),
       ),
-      hint: Text(hintText),
+      value: items[0],
       items: items
           .map((item) => DropdownMenuItem<String>(
                 value: item,
@@ -40,7 +39,7 @@ class SmallDropDown extends StatelessWidget {
           .toList(),
       validator: (value) {
         if (value == null) {
-          return 'Please select';
+          return 'Please select.';
         }
         return null;
       },
@@ -50,23 +49,20 @@ class SmallDropDown extends StatelessWidget {
       onSaved: (value) {
         selectedValue = value.toString();
       },
-      buttonStyleData: const ButtonStyleData(
-        padding: EdgeInsets.only(right: 8),
-      ),
       iconStyleData: const IconStyleData(
         icon: Icon(
           Icons.keyboard_arrow_down,
           color: Color.fromARGB(255, 44, 62, 80),
         ),
-        iconSize: 24,
+        iconSize: 20,
       ),
       dropdownStyleData: DropdownStyleData(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(5),
         ),
       ),
       menuItemStyleData: const MenuItemStyleData(
-        padding: EdgeInsets.symmetric(horizontal: 6),
+        padding: EdgeInsets.symmetric(horizontal: 3),
       ),
     );
   }

@@ -2,8 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/pages/dashboard.dart';
 import 'package:flutter_application_1/widgets/password_textfield.dart';
 import 'package:flutter_application_1/widgets/textfield_custom.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class Login extends StatelessWidget {
+  final CustomTextFIeld usernameTextField = CustomTextFIeld("Username");
+
+  void showToast(String message) {
+    Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      backgroundColor: Colors.black,
+      textColor: Colors.white,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +36,7 @@ class Login extends StatelessWidget {
           SizedBox(height: 25),
           Padding(
             padding: const EdgeInsets.only(top: 25),
-            child: CustomTextFIeld("Login"),
+            child: usernameTextField,
           ),
           CustomPasswordTextFIeld("Password"),
           Spacer(),
@@ -40,6 +53,9 @@ class Login extends StatelessWidget {
               Expanded(
                   child: ElevatedButton(
                       onPressed: () {
+                        // String usernameValue =
+                        //     usernameTextField.inputController.text;
+                        // showToast("Username: $usernameValue");
                         Navigator.push(
                             context,
                             MaterialPageRoute(

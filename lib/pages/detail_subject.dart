@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/model/subject.dart';
+import 'package:flutter_application_1/pages/create_attendance_page.dart';
 import 'package:flutter_application_1/pages/subject_dashboard.dart';
 import 'package:flutter_application_1/pages/subject_member_page.dart';
 import 'package:flutter_application_1/pages/subject_settings.dart';
@@ -18,7 +19,7 @@ class _DetailSubjectPageState extends State<DetailSubjectPage> {
   int _currentIndex = 0;
   late List<Widget> tabs = [
     SubjectDashboard(widget.currentSubject),
-    if (widget.currentSubject.type == "created") Center(child: Text("Add")),
+    CreateAttendancePage(widget.currentSubject),
     SubjectMemberPage(widget.currentSubject),
     SubjectSettingsPage(widget.currentSubject),
   ];
@@ -79,7 +80,14 @@ class _DetailSubjectPageState extends State<DetailSubjectPage> {
                 ],
                 onTap: (index) {
                   setState(() {
-                    _currentIndex = index;
+                    if (index == 1) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => CreateAttendancePage(widget.currentSubject)));
+                    } else {
+                      _currentIndex = index;
+                    }
                   });
                 },
               ),

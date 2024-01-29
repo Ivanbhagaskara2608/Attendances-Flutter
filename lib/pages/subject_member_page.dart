@@ -29,8 +29,7 @@ class SubjectMemberPage extends StatelessWidget {
               itemBuilder: (context, index) {
                 SubjectMember member = subjectMembers[index];
 
-                return MemberCard(member.fullname, member.email,
-                    member.joinDate, member.role, currentSubject.type);
+                return MemberCard(member, currentSubject.type);
               },
             ))
           ],

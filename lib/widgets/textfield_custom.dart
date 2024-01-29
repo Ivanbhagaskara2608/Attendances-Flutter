@@ -4,13 +4,16 @@ class CustomTextFIeld extends StatefulWidget {
   final String hintName;
 
   CustomTextFIeld(this.hintName);
+
   @override
   // ignore: library_private_types_in_public_api
   _CustomTextFIeldState createState() => _CustomTextFIeldState();
+
+  TextEditingController get inputController => _CustomTextFIeldState.inputController;
 }
 
 class _CustomTextFIeldState extends State<CustomTextFIeld> {
-  final inputController = TextEditingController();
+  static final TextEditingController inputController = TextEditingController();
 
   @override
   void initState() {
@@ -27,21 +30,25 @@ class _CustomTextFIeldState extends State<CustomTextFIeld> {
       cursorColor: Color.fromARGB(255, 44, 62, 80),
       controller: inputController,
       decoration: InputDecoration(
-          hintText: widget.hintName,
-          suffixIcon: inputController.text.isEmpty
-              ? Container(width: 0)
-              : IconButton(
-                  icon:
-                      Icon(Icons.close, color: Color.fromARGB(255, 190, 0, 57)),
-                  onPressed: () => inputController.clear(),
-                ),
-          enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(15),
-              borderSide: BorderSide(color: Colors.black, width: 1)),
-          focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(15),
-              borderSide: BorderSide(
-                  color: Color.fromARGB(255, 44, 62, 80), width: 2))),
+        hintText: widget.hintName,
+        suffixIcon: inputController.text.isEmpty
+            ? Container(width: 0)
+            : IconButton(
+                icon: Icon(Icons.close, color: Color.fromARGB(255, 190, 0, 57)),
+                onPressed: () => inputController.clear(),
+              ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: BorderSide(color: Colors.black, width: 1),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: BorderSide(
+            color: Color.fromARGB(255, 44, 62, 80),
+            width: 2,
+          ),
+        ),
+      ),
     );
   }
 }

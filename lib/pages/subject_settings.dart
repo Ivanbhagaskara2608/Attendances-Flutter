@@ -75,18 +75,18 @@ class SubjectSettingsPage extends StatelessWidget {
                       color: Colors.grey),
                 ),
                 SizedBox(width: 10),
-                InkWell(
-                  onTap: () async {
+                IconButton(
+                  onPressed: () async {
                     await Clipboard.setData(
                         ClipboardData(text: currentSubject.code));
                     // copied successfully
                   },
-                  child: Icon(
+                  icon: Icon(
                     Icons.copy,
                     color: Colors.grey,
                     size: 18,
                   ),
-                ),
+                )
               ],
             ),
           ),
