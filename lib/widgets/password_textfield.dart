@@ -8,21 +8,14 @@ class CustomPasswordTextFIeld extends StatefulWidget {
   // ignore: library_private_types_in_public_api
   _CustomPasswordTextFIeldState createState() =>
       _CustomPasswordTextFIeldState();
+  
+  TextEditingController get inputController => _CustomPasswordTextFIeldState.inputController;
 }
 
 class _CustomPasswordTextFIeldState extends State<CustomPasswordTextFIeld> {
-  final inputController = TextEditingController();
+  static final inputController = TextEditingController();
   String password = "";
   bool isPasswordVisible = true;
-
-  @override
-  void initState() {
-    super.initState();
-
-    inputController.addListener(() {
-      setState(() {});
-    });
-  }
 
   @override
   Widget build(BuildContext context) {

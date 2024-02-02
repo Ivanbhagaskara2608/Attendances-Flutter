@@ -5,22 +5,23 @@ class CustomTextFIeld extends StatefulWidget {
 
   CustomTextFIeld(this.hintName);
 
-  @override
-  // ignore: library_private_types_in_public_api
-  _CustomTextFIeldState createState() => _CustomTextFIeldState();
+  TextEditingController get inputController => _CustomTextFIeldState._inputController;
 
-  TextEditingController get inputController => _CustomTextFIeldState.inputController;
+  @override
+  _CustomTextFIeldState createState() => _CustomTextFIeldState();
 }
 
 class _CustomTextFIeldState extends State<CustomTextFIeld> {
-  static final TextEditingController inputController = TextEditingController();
+  static final TextEditingController _inputController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
 
-    inputController.addListener(() {
-      setState(() {});
+    _inputController.addListener(() {
+      if (mounted) {
+        setState(() {});
+      }
     });
   }
 
@@ -28,14 +29,14 @@ class _CustomTextFIeldState extends State<CustomTextFIeld> {
   Widget build(BuildContext context) {
     return TextField(
       cursorColor: Color.fromARGB(255, 44, 62, 80),
-      controller: inputController,
+      controller: _inputController,
       decoration: InputDecoration(
         hintText: widget.hintName,
-        suffixIcon: inputController.text.isEmpty
+        suffixIcon: _inputController.text.isEmpty
             ? Container(width: 0)
             : IconButton(
                 icon: Icon(Icons.close, color: Color.fromARGB(255, 190, 0, 57)),
-                onPressed: () => inputController.clear(),
+                onPressed: () => _inputController.clear(),
               ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),

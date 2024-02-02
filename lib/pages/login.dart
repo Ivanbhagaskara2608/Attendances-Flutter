@@ -1,11 +1,18 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/model/api_response.dart';
 import 'package:flutter_application_1/pages/dashboard.dart';
+import 'package:flutter_application_1/services/base_client.dart';
+import 'package:flutter_application_1/shared_preferences_helper.dart';
 import 'package:flutter_application_1/widgets/password_textfield.dart';
 import 'package:flutter_application_1/widgets/textfield_custom.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class Login extends StatelessWidget {
-  final CustomTextFIeld usernameTextField = CustomTextFIeld("Username");
+  final CustomTextFIeld emailTextField = CustomTextFIeld("Email");
+  final CustomPasswordTextFIeld passwordTextFIeld =
+      CustomPasswordTextFIeld("Password");
 
   void showToast(String message) {
     Fluttertoast.showToast(
@@ -36,9 +43,9 @@ class Login extends StatelessWidget {
           SizedBox(height: 25),
           Padding(
             padding: const EdgeInsets.only(top: 25),
-            child: usernameTextField,
+            child: emailTextField,
           ),
-          CustomPasswordTextFIeld("Password"),
+          passwordTextFIeld,
           Spacer(),
           Container(
             margin: EdgeInsets.only(bottom: 30),
@@ -52,14 +59,34 @@ class Login extends StatelessWidget {
             children: [
               Expanded(
                   child: ElevatedButton(
-                      onPressed: () {
-                        // String usernameValue =
-                        //     usernameTextField.inputController.text;
-                        // showToast("Username: $usernameValue");
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Dashboard()));
+                      onPressed: () async {
+                        var response = await BaseClient()
+                            .login(jsonEncode({
+                              "email": emailTextField.inputController.text,
+                              "password": passwordTextFIeld.inputController.text
+                            }))
+                            .catchError((err) {});
+
+                        ApiResponse<dynamic> apiResponse =
+                              ApiResponse.fromJson(
+                            json.decode(response.body),
+                            (data) => data, // Tidak ada transformasi pada data
+                          );
+
+                        if (response.statusCode == 200 && apiResponse.success == true) {
+                          final token = apiResponse.data['api_token'];
+
+                          SharedPreferencesHelper.saveToken(token);
+                          showToast(apiResponse.message);
+                          // ignore: use_build_context_synchronously
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Dashboard()));
+                        } else {
+                          showToast(apiResponse.message);
+                        }
+                        // login(context);
                       },
                       style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
