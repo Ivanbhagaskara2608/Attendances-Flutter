@@ -22,9 +22,12 @@ class CustomDialogError extends StatelessWidget {
                 fontWeight: FontWeight.bold,
                 color: Color.fromARGB(255, 199, 0, 57)),
           ),
-          Text(message),
+          Text(
+            message,
+            textAlign: TextAlign.center,
+          ),
           SizedBox(
-            height: 50,
+            height: 20,
           ),
           ElevatedButton(
             onPressed: () {

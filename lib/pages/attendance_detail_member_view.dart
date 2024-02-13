@@ -9,6 +9,7 @@ import 'package:flutter_application_1/widgets/textfield_custom.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
+// ignore: must_be_immutable
 class AttendanceDetailMemberView extends StatelessWidget {
   final Attendance attendance;
   final LatLng userLatLng;
@@ -31,6 +32,8 @@ class AttendanceDetailMemberView extends StatelessWidget {
     required this.mapController,
     required this.mapInitialPosition,
   });
+
+  TextEditingController codeController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +63,13 @@ class AttendanceDetailMemberView extends StatelessWidget {
             SizedBox(
               height: 5,
             ),
-            CustomTextFIeld("Attendance Code"),
+            CustomTextFIeld(
+              hintName: "Attendance Code",
+              isRequired: true,
+              isEmail: false,
+              minLength: 36,
+              controller: codeController,
+            ),
             Padding(
               padding: const EdgeInsets.only(top: 10),
               child: ElevatedButton(

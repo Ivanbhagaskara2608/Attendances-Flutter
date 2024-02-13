@@ -10,11 +10,13 @@ class EditProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController fullNameController = TextEditingController();
+    TextEditingController birthdateController = TextEditingController();
     final List<String> genderItems = [
       'Male',
       'Female',
     ];
-    String? selectedValue;
+    String? selectedGender;
     Color typeBackgroundColor = (userData.type == "Free")
         ? Color.fromRGBO(225, 220, 108, 100)
         : Color.fromARGB(255, 158, 255, 150);
@@ -132,18 +134,31 @@ class EditProfilePage extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.only(top: 20),
-                child: CustomTextFIeld("Fullname"),
+                child: CustomTextFIeld(
+                    hintName: "Fullname",
+                    isRequired: true,
+                    isEmail: false,
+                    minLength: 3,
+                    controller: fullNameController),
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 20),
                 child: CustomDropdownFormField(
                   items: genderItems,
-                  selectedValue: selectedValue,
+                  onChanged: (value) {
+                    // Perbarui nilai selectedGender saat dropdown berubah
+                    selectedGender = value;
+                  },
+                  selectedValue: selectedGender,
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 20),
-                child: CalendarTextField("Birthdate"),
+                child: CalendarTextField(
+                    hintName: "Birthdate",
+                    isRequired: true,
+                    isBirthdate: true,
+                    controller: birthdateController),
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 30),

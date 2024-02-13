@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/model/zoom_camera.dart';
 import 'package:flutter_application_1/widgets/camera_zoom.dart';
+import 'package:flutter_application_1/widgets/dialog_success.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
 class AttendanceScanner extends StatefulWidget {
@@ -94,9 +95,10 @@ class _AttendanceScannerState extends State<AttendanceScanner> {
                                 isScanCompleted = true;
 
                                 showDialog(
+                                  barrierDismissible: false,
                                   context: context,
                                   builder: (context) {
-                                    return CustomDialog(code!);
+                                    return CustomDialogSuccess('Code: $code');
                                   },
                                 );
                               }

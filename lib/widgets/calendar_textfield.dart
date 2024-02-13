@@ -3,30 +3,50 @@ import 'package:intl/intl.dart';
 
 class CalendarTextField extends StatefulWidget {
   final String hintName;
+  final bool isRequired;
+  final bool isBirthdate;
+  final TextEditingController controller;
 
-  CalendarTextField(this.hintName);
+  CalendarTextField(
+      {required this.hintName,
+      required this.isRequired,
+      required this.isBirthdate,
+      required this.controller});
+
   @override
-  // ignore: library_private_types_in_public_api
-  _CalendarTextFieldState createState() => _CalendarTextFieldState();
+  State<CalendarTextField> createState() => _CalendarTextFieldState();
 }
 
 class _CalendarTextFieldState extends State<CalendarTextField> {
-  final inputController = TextEditingController();
-
   @override
   void initState() {
     super.initState();
-
-    inputController.addListener(() {
+    widget.controller.addListener(() {
       setState(() {});
     });
-
-    inputController.text = "";
+    widget.controller.text = "";
   }
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
+      validator: (value) {
+        if (widget.isRequired) {
+          if (value!.isEmpty) {
+            return '${widget.hintName} is required';
+          }
+        }
+        if (widget.isBirthdate) {
+          DateTime selectedDate = DateFormat('yyyy-MM-dd').parse(value!);
+          DateTime today = DateTime.now();
+          today = DateTime(today.year, today.month, today.day);
+
+          if (selectedDate.isAtSameMomentAs(today) || selectedDate.isAfter(today)) {
+            return 'Please select a date before today';
+          }
+        }
+        return null;
+      },
       readOnly: true,
       onTap: () async {
         DateTime? pickedDate = await showDatePicker(
@@ -47,40 +67,49 @@ class _CalendarTextFieldState extends State<CalendarTextField> {
         );
 
         if (pickedDate != null) {
-          print(
-              pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
           String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
-          print(
-              formattedDate); //formatted date output using intl package =>  2021-03-16
-          //you can implement different kind of Date Format here according to your requirement
 
           setState(() {
-            inputController.text =
-                formattedDate; //set output date to TextField value.
+            widget.controller.text = formattedDate;
           });
-        } else {
-          print("Date is not selected");
         }
       },
-      controller: inputController,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      controller: widget.controller,
       decoration: InputDecoration(
-          hintText: widget.hintName,
-          prefixIcon: Icon(Icons.calendar_month_rounded),
-          prefixIconColor: Color.fromARGB(255, 44, 62, 80),
-          suffixIcon: inputController.text.isEmpty
-              ? Container(width: 0)
-              : IconButton(
-                  icon:
-                      Icon(Icons.close, color: Color.fromARGB(255, 190, 0, 57)),
-                  onPressed: () => inputController.clear(),
-                ),
-          enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(15),
-              borderSide: BorderSide(color: Colors.black, width: 1)),
-          focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(15),
-              borderSide: BorderSide(
-                  color: Color.fromARGB(255, 44, 62, 80), width: 2))),
+        hintText: widget.hintName,
+        prefixIcon: Icon(Icons.calendar_month_rounded),
+        prefixIconColor: Color.fromARGB(255, 44, 62, 80),
+        suffixIcon: widget.controller.text.isEmpty
+            ? Container(width: 0)
+            : IconButton(
+                icon: Icon(Icons.close, color: Color.fromARGB(255, 190, 0, 57)),
+                onPressed: () => widget.controller.clear(),
+              ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide:
+              BorderSide(color: Color.fromARGB(255, 190, 0, 57), width: 1),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: BorderSide(color: Colors.black, width: 1),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: BorderSide(
+            color: Color.fromARGB(255, 190, 0, 57),
+            width: 2,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: BorderSide(
+            color: Color.fromARGB(255, 44, 62, 80),
+            width: 2,
+          ),
+        ),
+      ),
     );
   }
 }

@@ -1,13 +1,20 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/model/api_response.dart';
 import 'package:flutter_application_1/model/user.dart';
 import 'package:flutter_application_1/pages/about_us_page.dart';
 import 'package:flutter_application_1/pages/edit_profile_page.dart';
+import 'package:flutter_application_1/pages/login.dart';
 import 'package:flutter_application_1/pages/subscription_histories_page.dart';
+import 'package:flutter_application_1/services/base_client.dart';
+import 'package:flutter_application_1/shared_preferences_helper.dart';
 import 'package:flutter_application_1/widgets/app_bar.dart';
 import 'package:flutter_application_1/widgets/drawer.dart';
 import 'package:flutter_application_1/widgets/small_password_textfield.dart';
 import 'package:flutter_application_1/widgets/small_textfield_custom.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class SettingsPage extends StatelessWidget {
   @override
@@ -389,6 +396,7 @@ class SettingsPage extends StatelessWidget {
             child: ElevatedButton(
               onPressed: () {
                 showDialog(
+                  barrierDismissible: false,
                   context: context,
                   builder: (context) {
                     return DialogLogout();
@@ -445,7 +453,43 @@ class DialogLogout extends StatelessWidget {
             children: [
               Expanded(
                   child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  final token = await SharedPreferencesHelper.getToken();
+                  var response = await BaseClient()
+                      .postWithToken("user/logout", jsonEncode({}), token!)
+                      .catchError((err) {});
+
+                  ApiResponse<dynamic> apiResponse = ApiResponse.fromJson(
+                    json.decode(response.body),
+                    (data) => data,
+                  );
+
+                  if (response.statusCode == 200 &&
+                      apiResponse.success == true) {
+                    SharedPreferencesHelper.clearToken();
+                    Fluttertoast.showToast(
+                      msg: apiResponse.message,
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.BOTTOM,
+                      backgroundColor: Colors.black,
+                      textColor: Colors.white,
+                    );
+                    // ignore: use_build_context_synchronously
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => Login()),
+                      (route) => false,
+                    );
+                  } else {
+                    Fluttertoast.showToast(
+                      msg: apiResponse.message,
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.BOTTOM,
+                      backgroundColor: Colors.black,
+                      textColor: Colors.white,
+                    );
+                  }
+                },
                 style: ElevatedButton.styleFrom(
                     backgroundColor: Color.fromARGB(255, 199, 0, 57),
                     minimumSize: Size.fromHeight(35),

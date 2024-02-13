@@ -17,42 +17,49 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   @override
-void initState() {
-  super.initState();
-  _getUserProfile();
-}
+  void initState() {
+    super.initState();
+    _getUserProfile();
+  }
 
-Future<void> _getUserProfile() async {
-  final token = await SharedPreferencesHelper.getToken();
-  if (token != null) {
-    var response = await BaseClient().userProfile(token).catchError((err) {});
+  Future<void> _getUserProfile() async {
+    final token = await SharedPreferencesHelper.getToken();
+    if (token != null) {
+      var response =
+          await BaseClient().get("user/profile", token).catchError((err) {});
 
-    ApiResponse<dynamic> apiResponse = ApiResponse.fromJson(
-      json.decode(response.body),
-      (data) => data,
-    );
+      ApiResponse<dynamic> apiResponse = ApiResponse.fromJson(
+        json.decode(response.body),
+        (data) => data,
+      );
 
-    if (response.statusCode == 200 && apiResponse.success == true) {
-      print(apiResponse.data);
-    } else {
-      print(apiResponse.message);
+      if (response.statusCode == 200 && apiResponse.success == true) {
+        print(apiResponse.data);
+      } else {
+        print(apiResponse.message);
+      }
     }
   }
-}
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(),
       drawer: CustomDrawer(),
-      body: ListView.builder(
-        itemCount: subjects.length,
-        itemBuilder: (context, index) {
-          Subject currentSubject = subjects[index];
-
-          return SubjectCard(currentSubject);
+      body: RefreshIndicator(
+        color: Color.fromARGB(255, 44, 62, 80),
+        onRefresh: () async {
+          await Future.delayed(Duration(seconds: 2));
+          _getUserProfile();
         },
+        child: ListView.builder(
+          itemCount: subjects.length,
+          itemBuilder: (context, index) {
+            Subject currentSubject = subjects[index];
+
+            return SubjectCard(currentSubject);
+          },
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         tooltip: 'Scan Attendance',

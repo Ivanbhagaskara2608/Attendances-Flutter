@@ -4,22 +4,37 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 // ignore: must_be_immutable
 class CustomDropdownFormField extends StatelessWidget {
   final List<String> items;
+  final ValueChanged<String?> onChanged;
   String? selectedValue;
 
   CustomDropdownFormField({
     required this.items,
+    required this.onChanged,
     required this.selectedValue,
   });
 
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField2<String>(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       isExpanded: true,
       decoration: InputDecoration(
         contentPadding: EdgeInsets.symmetric(vertical: 16),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide:
+              BorderSide(color: Color.fromARGB(255, 190, 0, 57), width: 1),
+        ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
           borderSide: BorderSide(color: Colors.black, width: 1),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: BorderSide(
+            color: Color.fromARGB(255, 190, 0, 57),
+            width: 2,
+          ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
@@ -43,7 +58,8 @@ class CustomDropdownFormField extends StatelessWidget {
         return null;
       },
       onChanged: (value) {
-        // Do something when the selected item is changed.
+        selectedValue = value.toString();
+        onChanged(value.toString());
       },
       onSaved: (value) {
         selectedValue = value.toString();
