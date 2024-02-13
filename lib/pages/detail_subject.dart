@@ -19,7 +19,7 @@ class _DetailSubjectPageState extends State<DetailSubjectPage> {
   int _currentIndex = 0;
   late List<Widget> tabs = [
     SubjectDashboard(widget.currentSubject),
-    CreateAttendancePage(widget.currentSubject),
+    if (widget.currentSubject.type == "created") CreateAttendancePage(widget.currentSubject),
     SubjectMemberPage(widget.currentSubject),
     SubjectSettingsPage(widget.currentSubject),
   ];
@@ -80,11 +80,12 @@ class _DetailSubjectPageState extends State<DetailSubjectPage> {
                 ],
                 onTap: (index) {
                   setState(() {
-                    if (index == 1) {
+                    if (index == 1 && widget.currentSubject.type == "created") {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => CreateAttendancePage(widget.currentSubject)));
+                              builder: (context) =>
+                                  CreateAttendancePage(widget.currentSubject)));
                     } else {
                       _currentIndex = index;
                     }

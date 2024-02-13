@@ -164,6 +164,7 @@ class _AttendanceScannerState extends State<AttendanceScanner> {
                         child: ElevatedButton(
                           onPressed: () {
                             showDialog(
+                              barrierDismissible: false,
                               context: context,
                               builder: (context) {
                                 return CustomDialog("test");
@@ -233,7 +234,7 @@ class CustomDialog extends StatelessWidget {
             style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: Color.fromARGB(255, 44, 62, 80)),
+                color: Color.fromARGB(255, 15, 175, 1)),
           ),
           Text('Code: $code'),
           SizedBox(

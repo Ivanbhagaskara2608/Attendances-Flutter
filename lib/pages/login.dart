@@ -70,7 +70,7 @@ class Login extends StatelessWidget {
                         ApiResponse<dynamic> apiResponse =
                               ApiResponse.fromJson(
                             json.decode(response.body),
-                            (data) => data, // Tidak ada transformasi pada data
+                            (data) => data, 
                           );
 
                         if (response.statusCode == 200 && apiResponse.success == true) {
@@ -86,7 +86,6 @@ class Login extends StatelessWidget {
                         } else {
                           showToast(apiResponse.message);
                         }
-                        // login(context);
                       },
                       style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
