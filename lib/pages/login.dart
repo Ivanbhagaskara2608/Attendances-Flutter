@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/database/db_helper.dart';
 import 'package:flutter_application_1/model/api_response.dart';
+import 'package:flutter_application_1/model/user.dart';
 import 'package:flutter_application_1/pages/dashboard.dart';
 import 'package:flutter_application_1/pages/register.dart';
 import 'package:flutter_application_1/services/base_client.dart';
@@ -12,10 +14,31 @@ import 'package:flutter_application_1/widgets/textfield_custom.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 // ignore: must_be_immutable
-class Login extends StatelessWidget {
+class Login extends StatefulWidget {
+  @override
+  State<Login> createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
   TextEditingController emailController = TextEditingController();
+
   TextEditingController passwordController = TextEditingController();
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  User? currentUser;
+  void getData() async {
+    final user = await DBHelper.getUser();
+    setState(() {
+      currentUser = user;
+    });
+    print("Current user data: ${currentUser?.fullname}");
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
 
   void showToast(String message) {
     Fluttertoast.showToast(
@@ -25,6 +48,23 @@ class Login extends StatelessWidget {
       backgroundColor: Colors.black,
       textColor: Colors.white,
     );
+  }
+
+  Future<void> getUserProfile(String token) async {
+    var response =
+        await BaseClient().get("user/profile", token).catchError((err) {});
+
+    ApiResponse<User> apiResponse = ApiResponse.fromJson(
+      json.decode(response.body),
+      (data) => User.fromJson(data),
+    );
+
+    if (response.statusCode == 200 && apiResponse.success == true) {
+      await DBHelper.addUser(apiResponse.data);
+      print("SUCCES ADD USER");
+    } else {
+      print(apiResponse.message);
+    }
   }
 
   @override
@@ -110,6 +150,7 @@ class Login extends StatelessWidget {
                                   final token = apiResponse.data['api_token'];
 
                                   SharedPreferencesHelper.saveToken(token);
+                                  getUserProfile(token);
                                   showToast(apiResponse.message);
                                   // ignore: use_build_context_synchronously
                                   Navigator.pushReplacement(

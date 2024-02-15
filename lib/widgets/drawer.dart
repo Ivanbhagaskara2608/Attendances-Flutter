@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/database/db_helper.dart';
 import 'package:flutter_application_1/model/subject.dart';
 import 'package:flutter_application_1/model/user.dart';
 import 'package:flutter_application_1/pages/buy_subscription_page.dart';
@@ -9,9 +10,28 @@ import 'package:flutter_application_1/pages/history_page.dart';
 import 'package:flutter_application_1/pages/join_subject_page.dart';
 import 'package:flutter_application_1/pages/settings_page.dart';
 
-class CustomDrawer extends StatelessWidget {
+class CustomDrawer extends StatefulWidget {
+  @override
+  State<CustomDrawer> createState() => _CustomDrawerState();
+}
+
+class _CustomDrawerState extends State<CustomDrawer> {
+  User? userData;
+  void getData() async {
+    final user = await DBHelper.getUser();
+    setState(() {
+      userData = user;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
   Widget buildDrawer(BuildContext context) {
-    if (userData.type == "Free") {
+    if (userData?.type == "free") {
       return ListTile(
         onTap: () {
           Navigator.pushReplacement(
@@ -37,11 +57,11 @@ class CustomDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color typeBackgroundColor = (userData.type == "Free")
+    Color typeBackgroundColor = (userData?.type == "free")
         ? Color.fromRGBO(225, 220, 108, 100)
         : Color.fromARGB(255, 158, 255, 150);
 
-    Color typeTextColor = (userData.type == "Free")
+    Color typeTextColor = (userData?.type == "free")
         ? Color.fromRGBO(176, 134, 1, 100)
         : Color.fromARGB(255, 15, 175, 1);
 
@@ -67,7 +87,7 @@ class CustomDrawer extends StatelessWidget {
                       borderRadius: BorderRadius.circular(5)),
                   padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                   child: Text(
-                    userData.type,
+                    userData?.type ?? 'free',
                     style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,

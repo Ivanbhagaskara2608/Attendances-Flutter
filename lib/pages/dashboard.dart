@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/database/db_helper.dart';
 import 'package:flutter_application_1/model/api_response.dart';
 import 'package:flutter_application_1/model/subject.dart';
+import 'package:flutter_application_1/model/user.dart';
 import 'package:flutter_application_1/pages/scan_attendance.dart';
 import 'package:flutter_application_1/services/base_client.dart';
 import 'package:flutter_application_1/shared_preferences_helper.dart';
@@ -28,13 +30,14 @@ class _DashboardState extends State<Dashboard> {
       var response =
           await BaseClient().get("user/profile", token).catchError((err) {});
 
-      ApiResponse<dynamic> apiResponse = ApiResponse.fromJson(
+      ApiResponse<User> apiResponse = ApiResponse.fromJson(
         json.decode(response.body),
-        (data) => data,
+        (data) => User.fromJson(data),
       );
 
       if (response.statusCode == 200 && apiResponse.success == true) {
-        print(apiResponse.data);
+        await DBHelper.updateUser(apiResponse.data);
+        print(apiResponse.data.type);
       } else {
         print(apiResponse.message);
       }

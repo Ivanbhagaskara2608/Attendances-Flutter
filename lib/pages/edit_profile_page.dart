@@ -1,13 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/database/db_helper.dart';
 import 'package:flutter_application_1/model/user.dart';
 import 'package:flutter_application_1/widgets/calendar_textfield.dart';
 import 'package:flutter_application_1/widgets/dropdown_custom.dart';
 import 'package:flutter_application_1/widgets/small_password_textfield.dart';
 import 'package:flutter_application_1/widgets/textfield_custom.dart';
 
-class EditProfilePage extends StatelessWidget {
+class EditProfilePage extends StatefulWidget {
   const EditProfilePage({super.key});
 
+  @override
+  State<EditProfilePage> createState() => _EditProfilePageState();
+}
+
+class _EditProfilePageState extends State<EditProfilePage> {
+  User? userData;
+  void getData() async {
+    final user = await DBHelper.getUser();
+    setState(() {
+      userData = user;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
   @override
   Widget build(BuildContext context) {
     TextEditingController fullNameController = TextEditingController();
@@ -17,11 +36,11 @@ class EditProfilePage extends StatelessWidget {
       'Female',
     ];
     String? selectedGender;
-    Color typeBackgroundColor = (userData.type == "Free")
+    Color typeBackgroundColor = (userData?.type == "Free")
         ? Color.fromRGBO(225, 220, 108, 100)
         : Color.fromARGB(255, 158, 255, 150);
 
-    Color typeTextColor = (userData.type == "Free")
+    Color typeTextColor = (userData?.type == "Free")
         ? Color.fromRGBO(176, 134, 1, 100)
         : Color.fromARGB(255, 15, 175, 1);
 
@@ -91,7 +110,7 @@ class EditProfilePage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(5)),
                 padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                 child: Text(
-                  userData.type,
+                  userData?.type ?? 'free',
                   style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
@@ -102,7 +121,7 @@ class EditProfilePage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 2),
               child: Text(
-                userData.fullname,
+                userData?.fullname ?? 'undefined',
                 style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -112,7 +131,7 @@ class EditProfilePage extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(vertical: 2),
               child: Text(
-                userData.email,
+                userData?.email ?? 'undefined',
                 style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/database/db_helper.dart';
 import 'package:flutter_application_1/model/api_response.dart';
 import 'package:flutter_application_1/model/user.dart';
 import 'package:flutter_application_1/pages/about_us_page.dart';
@@ -15,15 +16,43 @@ import 'package:flutter_application_1/widgets/small_password_textfield.dart';
 import 'package:flutter_application_1/widgets/small_textfield_custom.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
 
-class SettingsPage extends StatelessWidget {
+class SettingsPage extends StatefulWidget {
+  @override
+  State<SettingsPage> createState() => _SettingsPageState();
+}
+
+class _SettingsPageState extends State<SettingsPage> {
+  User? userData;
+  void getData() async {
+    final user = await DBHelper.getUser();
+    setState(() {
+      userData = user;
+    });
+  }
+
+  String? formatDate(String? inputDate) {
+  if (inputDate != null) {
+    final parsedDate = DateTime.parse(inputDate);
+    return DateFormat('dd/MM/yyyy').format(parsedDate);
+  }
+  return null;
+}
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
   @override
   Widget build(BuildContext context) {
-    Color typeBackgroundColor = (userData.type == "Free")
+    Color typeBackgroundColor = (userData?.type == "free")
         ? Color.fromRGBO(225, 220, 108, 100)
         : Color.fromARGB(255, 158, 255, 150);
 
-    Color typeTextColor = (userData.type == "Free")
+    Color typeTextColor = (userData?.type == "free")
         ? Color.fromRGBO(176, 134, 1, 100)
         : Color.fromARGB(255, 15, 175, 1);
 
@@ -62,7 +91,7 @@ class SettingsPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(5)),
                   padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                   child: Text(
-                    userData.type,
+                    userData?.type ?? 'free',
                     style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
@@ -73,7 +102,7 @@ class SettingsPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 2),
                 child: Text(
-                  userData.fullname,
+                  userData?.fullname ?? 'undefined',
                   style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -83,7 +112,7 @@ class SettingsPage extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 2),
                 child: Text(
-                  userData.email,
+                  userData?.email ?? 'undefined',
                   style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
@@ -93,7 +122,7 @@ class SettingsPage extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 2),
                 child: Text(
-                  "Member since : 18/07/2023",
+                  "Member since : ${formatDate(userData?.createdAt)}",
                   style: TextStyle(fontSize: 11, color: Colors.grey),
                 ),
               ),
@@ -183,7 +212,7 @@ class SettingsPage extends StatelessWidget {
               showDialog(
                 context: context,
                 builder: (context) {
-                  return DialogSubscriptionStatus();
+                  return DialogSubscriptionStatus(userData!);
                 },
               );
             },
@@ -220,7 +249,7 @@ class SettingsPage extends StatelessWidget {
                           padding:
                               EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                           child: Text(
-                            userData.type,
+                            userData?.type ?? 'free',
                             style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
@@ -467,6 +496,7 @@ class DialogLogout extends StatelessWidget {
                   if (response.statusCode == 200 &&
                       apiResponse.success == true) {
                     SharedPreferencesHelper.clearToken();
+                    await DBHelper.deleteData();
                     Fluttertoast.showToast(
                       msg: apiResponse.message,
                       toastLength: Toast.LENGTH_SHORT,
@@ -533,7 +563,8 @@ class DialogLogout extends StatelessWidget {
 }
 
 class DialogSubscriptionStatus extends StatelessWidget {
-  const DialogSubscriptionStatus({super.key});
+  final User userData;
+  const DialogSubscriptionStatus(this.userData, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -553,7 +584,7 @@ class DialogSubscriptionStatus extends StatelessWidget {
             ),
           ),
           Image.asset(
-            (userData.type == "Free")
+            (userData.type == "free")
                 ? "assets/icon_free.png"
                 : "assets/icon_premium.png",
             width: 90,
@@ -567,7 +598,7 @@ class DialogSubscriptionStatus extends StatelessWidget {
             style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: (userData.type == "Free")
+                color: (userData.type == "free")
                     ? Color.fromARGB(255, 175, 134, 1)
                     : Color.fromARGB(255, 15, 175, 1)),
           ),
@@ -579,7 +610,7 @@ class DialogSubscriptionStatus extends StatelessWidget {
                 color: Color.fromARGB(255, 44, 62, 80)),
           ),
           Text(
-            (userData.type == "Free") ? "-" : "10 January 2024",
+            (userData.type == "free") ? "-" : "10 January 2024",
             style:
                 TextStyle(fontSize: 13, color: Color.fromARGB(255, 44, 62, 80)),
           ),
