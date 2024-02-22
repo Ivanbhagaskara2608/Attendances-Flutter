@@ -21,7 +21,6 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   TextEditingController emailController = TextEditingController();
-
   TextEditingController passwordController = TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -93,6 +92,7 @@ class _LoginState extends State<Login> {
                       isRequired: true,
                       isEmail: true,
                       minLength: 0,
+                      maxLength: null,
                       controller: emailController),
                 ),
                 CustomPasswordTextField(
@@ -153,10 +153,13 @@ class _LoginState extends State<Login> {
                                   getUserProfile(token);
                                   showToast(apiResponse.message);
                                   // ignore: use_build_context_synchronously
-                                  Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => Dashboard()));
+                                  Navigator.pushAndRemoveUntil(
+                                    // ignore: use_build_context_synchronously
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Dashboard()),
+                                    (route) => false,
+                                  );
                                 } else {
                                   // ignore: use_build_context_synchronously
                                   showDialog(

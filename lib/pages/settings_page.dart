@@ -33,12 +33,12 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   String? formatDate(String? inputDate) {
-  if (inputDate != null) {
-    final parsedDate = DateTime.parse(inputDate);
-    return DateFormat('dd/MM/yyyy').format(parsedDate);
+    if (inputDate != null) {
+      final parsedDate = DateTime.parse(inputDate);
+      return DateFormat('dd/MM/yyyy').format(parsedDate);
+    }
+    return null;
   }
-  return null;
-}
 
   @override
   void initState() {
@@ -103,6 +103,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 padding: const EdgeInsets.symmetric(vertical: 2),
                 child: Text(
                   userData?.fullname ?? 'undefined',
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -270,6 +271,7 @@ class _SettingsPageState extends State<SettingsPage> {
           ListTile(
             onTap: () {
               showDialog(
+                barrierDismissible: false,
                 context: context,
                 builder: (context) {
                   return DialogChangeEmail();
@@ -625,74 +627,134 @@ class DialogChangeEmail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController emailController = TextEditingController();
+    TextEditingController passwordController = TextEditingController();
+    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
     return Dialog(
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 35),
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
-        child: Column(mainAxisSize: MainAxisSize.min, children: [
-          Image.asset("assets/icon_warning.png", width: 80, height: 80),
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-            "Are you sure?",
-            style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Color.fromARGB(255, 175, 134, 1)),
-          ),
-          Text("Your email address will be changes!"),
-          SizedBox(
-            height: 20,
-          ),
-          SmallCustomTextFIeld("New Email Address"),
-          SmallCustomPasswordTextFIeld("Your Current Password"),
-          SizedBox(
-            height: 28,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Expanded(
-                  child: ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Color.fromARGB(255, 199, 0, 57),
-                    minimumSize: Size.fromHeight(35),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0))),
-                child: Text(
-                  "Yes, I'm sure!",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 12,
-                      color: Colors.white),
+      child: Form(
+        key: formKey,
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 35),
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
+          child: Column(mainAxisSize: MainAxisSize.min, children: [
+            Image.asset("assets/icon_warning.png", width: 80, height: 80),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              "Are you sure?",
+              style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromARGB(255, 175, 134, 1)),
+            ),
+            Text("Your email address will be changes!"),
+            SizedBox(
+              height: 20,
+            ),
+            SmallCustomTextFIeld(
+                hintName: "New email address",
+                isRequired: true,
+                isEmail: true,
+                minLength: 0,
+                maxLength: null,
+                controller: emailController),
+            SmallCustomPasswordTextFIeld(
+              hintName: "Your Current Password",
+              controller: passwordController,
+            ),
+            SizedBox(
+              height: 28,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Expanded(
+                    child: ElevatedButton(
+                  onPressed: () async {
+                    if (formKey.currentState!.validate()) {
+                      final token = await SharedPreferencesHelper.getToken();
+                      var response = await BaseClient()
+                          .postWithToken(
+                              "user/change-email",
+                              jsonEncode({
+                                "email": emailController.text,
+                                "password": passwordController.text,
+                              }),
+                              token!)
+                          .catchError((err) {});
+
+                      ApiResponse<dynamic> apiResponse = ApiResponse.fromJson(
+                        json.decode(response.body),
+                        (data) => data,
+                      );
+
+                      if (response.statusCode == 200 &&
+                          apiResponse.success == true) {
+                        SharedPreferencesHelper.clearToken();
+                        await DBHelper.deleteData();
+                        Fluttertoast.showToast(
+                          msg: apiResponse.message,
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          backgroundColor: Colors.black,
+                          textColor: Colors.white,
+                        );
+                        // ignore: use_build_context_synchronously
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (context) => Login()),
+                          (route) => false,
+                        );
+                      } else {
+                        Fluttertoast.showToast(
+                          msg: apiResponse.message,
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          backgroundColor: Colors.black,
+                          textColor: Colors.white,
+                        );
+                      }
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Color.fromARGB(255, 199, 0, 57),
+                      minimumSize: Size.fromHeight(35),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0))),
+                  child: Text(
+                    "Yes, I'm sure!",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
+                        color: Colors.white),
+                  ),
+                )),
+                SizedBox(
+                  width: 20,
                 ),
-              )),
-              SizedBox(
-                width: 20,
-              ),
-              Expanded(
-                  child: ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Color.fromARGB(255, 44, 62, 80),
-                    minimumSize: Size.fromHeight(35),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0))),
-                child: Text(
-                  "Cancel",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 12,
-                      color: Colors.white),
-                ),
-              ))
-            ],
-          ),
-        ]),
+                Expanded(
+                    child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Color.fromARGB(255, 44, 62, 80),
+                      minimumSize: Size.fromHeight(35),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0))),
+                  child: Text(
+                    "Cancel",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
+                        color: Colors.white),
+                  ),
+                ))
+              ],
+            ),
+          ]),
+        ),
       ),
     );
   }
@@ -703,72 +765,135 @@ class DialogChangePassword extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController newPasswordController = TextEditingController();
+    TextEditingController newPasswordConfirmController =
+        TextEditingController();
+    TextEditingController currentPasswordController = TextEditingController();
+    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
     return Dialog(
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 35),
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
-        child: Column(mainAxisSize: MainAxisSize.min, children: [
-          Image.asset("assets/icon_warning.png", width: 80, height: 80),
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-            "Are you sure?",
-            style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Color.fromARGB(255, 175, 134, 1)),
-          ),
-          Text("Your password will be changes!"),
-          SmallCustomPasswordTextFIeld("New Password"),
-          SmallCustomPasswordTextFIeld("New Password Confirmation"),
-          SmallCustomPasswordTextFIeld("Your Current Password"),
-          SizedBox(
-            height: 28,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Expanded(
-                  child: ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Color.fromARGB(255, 199, 0, 57),
-                    minimumSize: Size.fromHeight(35),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0))),
-                child: Text(
-                  "Yes, I'm sure!",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 12,
-                      color: Colors.white),
+      child: Form(
+        key: formKey,
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 35),
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
+          child: Column(mainAxisSize: MainAxisSize.min, children: [
+            Image.asset("assets/icon_warning.png", width: 80, height: 80),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              "Are you sure?",
+              style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromARGB(255, 175, 134, 1)),
+            ),
+            Text("Your password will be changes!"),
+            SmallCustomPasswordTextFIeld(
+              hintName: "New Password",
+              controller: newPasswordController,
+            ),
+            SmallCustomPasswordTextFIeld(
+              hintName: "New Password Confirmation",
+              controller: newPasswordConfirmController,
+            ),
+            SmallCustomPasswordTextFIeld(
+              hintName: "Your Current Password",
+              controller: currentPasswordController,
+            ),
+            SizedBox(
+              height: 28,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Expanded(
+                    child: ElevatedButton(
+                  onPressed: () async {
+                    if (formKey.currentState!.validate()) {
+                      final token = await SharedPreferencesHelper.getToken();
+                      var response = await BaseClient()
+                          .postWithToken(
+                              "user/change-password",
+                              jsonEncode({
+                                "currentPassword": currentPasswordController.text,
+                                "newPassword": newPasswordController.text,
+                                "newPassword_confirmation": newPasswordConfirmController.text,
+                              }),
+                              token!)
+                          .catchError((err) {});
+
+                      ApiResponse<dynamic> apiResponse = ApiResponse.fromJson(
+                        json.decode(response.body),
+                        (data) => data,
+                      );
+
+                      if (response.statusCode == 200 &&
+                          apiResponse.success == true) {
+                        SharedPreferencesHelper.clearToken();
+                        await DBHelper.deleteData();
+                        Fluttertoast.showToast(
+                          msg: apiResponse.message,
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          backgroundColor: Colors.black,
+                          textColor: Colors.white,
+                        );
+                        // ignore: use_build_context_synchronously
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (context) => Login()),
+                          (route) => false,
+                        );
+                      } else {
+                        Fluttertoast.showToast(
+                          msg: apiResponse.message,
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          backgroundColor: Colors.black,
+                          textColor: Colors.white,
+                        );
+                      }
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Color.fromARGB(255, 199, 0, 57),
+                      minimumSize: Size.fromHeight(35),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0))),
+                  child: Text(
+                    "Yes, I'm sure!",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
+                        color: Colors.white),
+                  ),
+                )),
+                SizedBox(
+                  width: 20,
                 ),
-              )),
-              SizedBox(
-                width: 20,
-              ),
-              Expanded(
-                  child: ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Color.fromARGB(255, 44, 62, 80),
-                    minimumSize: Size.fromHeight(35),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0))),
-                child: Text(
-                  "Cancel",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 12,
-                      color: Colors.white),
-                ),
-              ))
-            ],
-          ),
-        ]),
+                Expanded(
+                    child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Color.fromARGB(255, 44, 62, 80),
+                      minimumSize: Size.fromHeight(35),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0))),
+                  child: Text(
+                    "Cancel",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
+                        color: Colors.white),
+                  ),
+                ))
+              ],
+            ),
+          ]),
+        ),
       ),
     );
   }

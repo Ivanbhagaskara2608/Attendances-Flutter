@@ -51,6 +51,7 @@ class Register extends StatelessWidget {
                     isRequired: true,
                     isEmail: true,
                     minLength: 0,
+                    maxLength: null,
                     controller: emailController),
               ),
               Padding(
@@ -60,6 +61,7 @@ class Register extends StatelessWidget {
                     isRequired: true,
                     isEmail: false,
                     minLength: 3,
+                    maxLength: 72,
                     controller: fullNameController),
               ),
               Padding(
@@ -163,23 +165,6 @@ class Register extends StatelessWidget {
                                   },
                                 );
                               }
-                              // if (selectedGender != null) {
-                              //   Fluttertoast.showToast(
-                              //     msg: selectedGender!,
-                              //     toastLength: Toast.LENGTH_SHORT,
-                              //     gravity: ToastGravity.BOTTOM,
-                              //     backgroundColor: Colors.black,
-                              //     textColor: Colors.white,
-                              //   );
-                              // } else {
-                              //   Fluttertoast.showToast(
-                              //     msg: 'Please select gender',
-                              //     toastLength: Toast.LENGTH_SHORT,
-                              //     gravity: ToastGravity.BOTTOM,
-                              //     backgroundColor: Colors.black,
-                              //     textColor: Colors.white,
-                              //   );
-                              // }
                             }
                           },
                           style: ElevatedButton.styleFrom(

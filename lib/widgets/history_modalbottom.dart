@@ -71,6 +71,7 @@ class _HistoryModalBottomState extends State<HistoryModalBottom> {
                     isRequired: false,
                     isEmail: false,
                     minLength: 0,
+                    maxLength: null,
                     controller: subjectController),
                 Padding(
                   padding: const EdgeInsets.only(top: 15, bottom: 8),

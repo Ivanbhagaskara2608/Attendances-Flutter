@@ -23,6 +23,7 @@ class _CreateAttendancePageState extends State<CreateAttendancePage> {
   final dateController = TextEditingController();
   final startTimeController = TextEditingController();
   final endTimeController = TextEditingController();
+  final locationController = TextEditingController();
   TimeOfDay selectedTime = TimeOfDay.now();
   bool isLocationActive = true;
   int initialLabelIndex = 1;
@@ -367,7 +368,12 @@ class _CreateAttendancePageState extends State<CreateAttendancePage> {
                   SizedBox(
                     height: 10,
                   ),
-                  SmallCustomTextFIeld("Location"),
+                  SmallCustomTextFIeld(hintName: "Location",
+                      isRequired: true,
+                      isEmail: false,
+                      minLength: 0,
+                      maxLength: null,
+                      controller: locationController),
                 ],
               )),
           Padding(

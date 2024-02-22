@@ -13,9 +13,14 @@ class CustomDropdownFormField extends StatelessWidget {
     required this.selectedValue,
   });
 
+  String toTitleCase(String input) {
+    return input[0].toUpperCase() + input.substring(1);
+  }
+
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField2<String>(
+      value: toTitleCase(selectedValue ?? 'male'),
       autovalidateMode: AutovalidateMode.onUserInteraction,
       isExpanded: true,
       decoration: InputDecoration(

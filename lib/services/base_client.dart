@@ -1,6 +1,6 @@
 import 'package:http/http.dart' as http;
 
-const String baseUrl = 'https://cbd3-180-254-122-206.ngrok-free.app/api';
+const String baseUrl = 'https://21c5-180-254-122-206.ngrok-free.app/api';
 
 class BaseClient {
   var client = http.Client();

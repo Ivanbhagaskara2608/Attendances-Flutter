@@ -136,6 +136,7 @@ class DialogChangeStatus extends StatelessWidget {
     'Sick',
   ];
   String? selectedValue;
+  TextEditingController reasonController = TextEditingController();
   DialogChangeStatus(this.member, {super.key});
 
   @override
@@ -167,7 +168,12 @@ class DialogChangeStatus extends StatelessWidget {
           SizedBox(
             height: 15,
           ),
-          SmallCustomTextFIeld("Reason"),
+          SmallCustomTextFIeld(hintName: "Reason",
+                      isRequired: true,
+                      isEmail: false,
+                      minLength: 0,
+                      maxLength: null,
+                      controller: reasonController),
           Container(
             margin: EdgeInsets.only(top: 15),
             width: double.infinity,

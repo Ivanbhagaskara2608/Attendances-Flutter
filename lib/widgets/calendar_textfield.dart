@@ -24,7 +24,7 @@ class _CalendarTextFieldState extends State<CalendarTextField> {
     widget.controller.addListener(() {
       setState(() {});
     });
-    widget.controller.text = "";
+    // widget.controller.text = "";
   }
 
   @override
@@ -41,7 +41,8 @@ class _CalendarTextFieldState extends State<CalendarTextField> {
           DateTime today = DateTime.now();
           today = DateTime(today.year, today.month, today.day);
 
-          if (selectedDate.isAtSameMomentAs(today) || selectedDate.isAfter(today)) {
+          if (selectedDate.isAtSameMomentAs(today) ||
+              selectedDate.isAfter(today)) {
             return 'Please select a date before today';
           }
         }

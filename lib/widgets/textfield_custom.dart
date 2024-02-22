@@ -5,6 +5,7 @@ class CustomTextFIeld extends StatefulWidget {
   final bool isRequired;
   final bool isEmail;
   final int minLength;
+  final int? maxLength;
   final TextEditingController controller;
 
   CustomTextFIeld(
@@ -12,6 +13,7 @@ class CustomTextFIeld extends StatefulWidget {
       required this.isRequired,
       required this.isEmail,
       required this.minLength,
+      required this.maxLength,
       required this.controller});
 
   @override
@@ -38,8 +40,9 @@ class _CustomTextFIeldState extends State<CustomTextFIeld> {
             return '${widget.hintName} is required';
           }
         }
-        if (value!.length < widget.minLength) {
-          return "${widget.hintName} should be at least ${widget.minLength} characters";
+        if (value!.length < widget.minLength ||
+            (widget.maxLength != null && value.length > widget.maxLength!)) {
+          return "${widget.hintName} should be between ${widget.minLength} and ${widget.maxLength} characters";
         }
         if (widget.isEmail) {
           const pattern = r"(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'"

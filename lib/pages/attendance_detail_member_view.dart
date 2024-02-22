@@ -68,6 +68,7 @@ class AttendanceDetailMemberView extends StatelessWidget {
               isRequired: true,
               isEmail: false,
               minLength: 36,
+              maxLength: null,
               controller: codeController,
             ),
             Padding(
@@ -341,6 +342,7 @@ class AttendanceDetailMemberView extends StatelessWidget {
 
 // ignore: must_be_immutable
 class DialogAttend extends StatelessWidget {
+  final reasonController = TextEditingController();
   final List<String> statusItems = [
     'Leave',
     'Sick',
@@ -376,7 +378,12 @@ class DialogAttend extends StatelessWidget {
           SizedBox(
             height: 15,
           ),
-          SmallCustomTextFIeld("Reason"),
+          SmallCustomTextFIeld(hintName: "Reason",
+                      isRequired: true,
+                      isEmail: false,
+                      minLength: 0,
+                      maxLength: null,
+                      controller: reasonController),
           Container(
             margin: EdgeInsets.only(top: 15),
             width: double.infinity,

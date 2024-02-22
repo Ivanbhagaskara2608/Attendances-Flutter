@@ -4,16 +4,17 @@ class CustomPasswordTextField extends StatefulWidget {
   final String hintName;
   final TextEditingController controller;
 
-  CustomPasswordTextField({required this.hintName, required this.controller});
+  CustomPasswordTextField({
+    required this.hintName,
+    required this.controller,
+  });
 
   @override
-  // ignore: library_private_types_in_public_api
-  _CustomPasswordTextFieldState createState() =>
+  State<CustomPasswordTextField> createState() =>
       _CustomPasswordTextFieldState();
 }
 
 class _CustomPasswordTextFieldState extends State<CustomPasswordTextField> {
-  String password = "";
   bool isPasswordVisible = true;
 
   @override
@@ -25,8 +26,8 @@ class _CustomPasswordTextFieldState extends State<CustomPasswordTextField> {
           if (value!.isEmpty) {
             return '${widget.hintName} is required';
           }
-          if (value.length < 8) {
-            return "${widget.hintName} should be at least 8 characters";
+          if ((value.length < 8 || value.length >= 64)) {
+            return "${widget.hintName} should be between 8 and 64 characters";
           }
           return null;
         },

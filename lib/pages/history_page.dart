@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/database/db_helper.dart';
 import 'package:flutter_application_1/model/history.dart';
-import 'package:flutter_application_1/model/user.dart';
 import 'package:flutter_application_1/widgets/app_bar.dart';
 import 'package:flutter_application_1/widgets/drawer.dart';
 import 'package:flutter_application_1/widgets/history_card.dart';
@@ -13,21 +11,6 @@ class HistoryPage extends StatefulWidget {
 }
 
 class _HistoryPageState extends State<HistoryPage> {
-  User? currentUser;
-  void getData() async {
-    final user = await DBHelper.getUser();
-    setState(() {
-      currentUser = user;
-    });
-    print("Current user data: ${currentUser?.fullname}");
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getData();
-  }
-
   void _showFilterOptions(BuildContext context) {
     showModalBottomSheet(
       context: context,
